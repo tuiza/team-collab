@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import Header from './componetes/Header'
 import StyledComponentsRegistry from './lib/registry'
+import { AuthProvider } from '../../providers/auth-providers'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,12 +18,15 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <StyledComponentsRegistry>
-          {children}
-        </StyledComponentsRegistry>
-      </body>
-    </html>
+    <AuthProvider>
+      <html lang="en">
+        <body className={inter.className}>
+          <StyledComponentsRegistry>
+            <Header />
+            {children}
+          </StyledComponentsRegistry>
+        </body>
+    </html >
+    </AuthProvider>
   )
 }
