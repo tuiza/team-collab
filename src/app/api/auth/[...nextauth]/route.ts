@@ -31,7 +31,16 @@ const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    jwt: ({ token, user }) => {
+    jwt: async ({ token, user }) => {
+      const customUser = user as unknown as any
+
+      if (user) {
+        return {
+          ...token,
+          role: customUser.role
+        }
+      }
+
       return token
     },
     session: async ({ session, token }) => {
@@ -46,7 +55,7 @@ const authOptions: NextAuthOptions = {
     }
   },
   pages: {
-    signIn: "/login",
+    signIn: "/public/login",
   },
 };
 
