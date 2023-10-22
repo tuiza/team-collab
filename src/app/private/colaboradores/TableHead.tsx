@@ -1,24 +1,30 @@
-import PropTypes from 'prop-types';
-
 import Box from '@mui/material/Box';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import TableHead from '@mui/material/TableHead';
-import TableCell from '@mui/material/TableCell';
+import TableCell, { TableCellProps } from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 
 import { visuallyHidden } from './utils';
 import { MouseEventHandler } from 'react';
 
-type UserTableHeadProps = {
-  order: 'asc' | 'desc';
-  orderBy: string;
-  rowCount: number;
-  headLabel: any[];
-  numSelected: number;
-  onRequestSort: (event: MouseEventHandler<HTMLAnchorElement>, property: string) => void;
+interface HeadCell {
+  id: string;
+  align?: TableCellProps['align'];
+  width?: string;
+  minWidth?: string;
+  label: string;
+}
+
+interface ColaboradoresTableHeadProps {
+  order: 'asc' | 'desc' | undefined;
+  orderBy: string | undefined;
+  rowCount: number ;
+  headLabel: HeadCell[];
+  numSelected: number ;
+  onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
-};
+}
 
 export default function UserTableHead({
   order,
@@ -28,9 +34,9 @@ export default function UserTableHead({
   numSelected,
   onRequestSort,
   onSelectAllClick,
-}: UserTableHeadProps) {
+}: ColaboradoresTableHeadProps) {
 
-  const onSort = (property: string) => (event: MouseEventHandler<HTMLAnchorElement>) => {
+  const onSort = (property: string) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property);
   };
 
@@ -39,7 +45,8 @@ export default function UserTableHead({
       <TableRow>
         <TableCell padding="checkbox">
           <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
+            indeterminate={numSelected > 0 && numSelected < rowCount
+            }
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
           />
@@ -53,10 +60,10 @@ export default function UserTableHead({
             sx={{ width: headCell.width, minWidth: headCell.minWidth }}
           >
             <TableSortLabel
+              hideSortIcon
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={onSort(headCell.id)}
-              sx={{ ...(headCell.sortable && { cursor: 'pointer' }) }}
             >
               {headCell.label}
               {orderBy === headCell.id ? (

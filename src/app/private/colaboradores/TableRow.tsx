@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import Popover from '@mui/material/Popover';
@@ -11,7 +11,7 @@ import IconButton from '@mui/material/IconButton';
 
 import { Label } from '@mui/icons-material';
 
-type UserTableRowProps = {
+interface UserTableRowProps  {
   selected: boolean;
   name: string;
   company: string;
@@ -20,6 +20,7 @@ type UserTableRowProps = {
   status: string;
   handleClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
+
 
 export default function UserTableRow({
   selected,
@@ -30,9 +31,9 @@ export default function UserTableRow({
   status,
   handleClick,
 }: UserTableRowProps) {
-  const [open, setOpen] = useState(null);
+  const [open, setOpen] = useState<HTMLElement | null>(null);
 
-  const handleOpenMenu = (event) => {
+  const handleOpenMenu = (event: React.ChangeEvent<HTMLInputElement> ) => {
     setOpen(event.currentTarget);
   };
 

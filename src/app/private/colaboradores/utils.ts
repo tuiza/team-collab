@@ -1,20 +1,24 @@
-export const visuallyHidden = {
+export const visuallyHidden: React.CSSProperties = {
   border: 0,
   margin: -1,
   padding: 0,
-  width: '1px',
-  height: '1px',
-  overflow: 'hidden',
-  position: 'absolute',
-  whiteSpace: 'nowrap',
-  clip: 'rect(0 0 0 0)',
+  width: "1px",
+  height: "1px",
+  overflow: "hidden",
+  position: "absolute",
+  whiteSpace: "nowrap",
+  clip: "rect(0 0 0 0)",
 };
 
-export function emptyRows(page, rowsPerPage, arrayLength) {
+export function emptyRows(
+  page: number,
+  rowsPerPage: number,
+  arrayLength: number
+): number {
   return page ? Math.max(0, (1 + page) * rowsPerPage - arrayLength) : 0;
 }
 
-function descendingComparator(a, b, orderBy) {
+function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (a[orderBy] === null) {
     return 1;
   }
@@ -29,19 +33,28 @@ function descendingComparator(a, b, orderBy) {
   }
   return 0;
 }
-export function getComparator(order: "desc" | "asc", orderBy: number) {
+
+export function getComparator<Key extends keyof any>(
+  order: "asc" | "desc",
+  orderBy: Key
+): (
+  a: { [key in Key]: number | string | null },
+  b: { [key in Key]: number | string | null }
+) => number {
   return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-type FilterProps = {
-  inputData: any;
-  comparator: any;
+export function applyFilter({
+  inputData,
+  comparator,
+  filterName,
+}: {
+  inputData: any[];
+  comparator: (a: any, b: any) => number;
   filterName: string;
-};
-
-export function applyFilter({ inputData, comparator, filterName }: FilterProps) {
+}) {
   const stabilizedThis = inputData.map((el, index) => [el, index]);
 
   stabilizedThis.sort((a, b) => {
@@ -54,7 +67,7 @@ export function applyFilter({ inputData, comparator, filterName }: FilterProps) 
 
   if (filterName) {
     inputData = inputData.filter(
-      (user) => user.nome.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+      (user) => user.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
 

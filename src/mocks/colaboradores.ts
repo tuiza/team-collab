@@ -24,3 +24,15 @@ export const users = [...Array(24)].map((_, index) => ({
   ]),
 }));
  */
+
+import exp from "constants";
+
+export const colaboradores = [
+  {
+    id: 1,
+    name: "Luiza Marlene",
+    company: "Empresa 1",
+    isVerified: true,
+    status: "active",
+    role: "Leader",
+  },]

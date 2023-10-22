@@ -1,5 +1,5 @@
 "use client";
-import {  useState, useEffect } from "react";
+import {  ChangeEvent, useState } from "react";
 
 import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
@@ -17,72 +17,39 @@ import UserTableHead from "./TableHead";
 import TableEmptyRows from "./EmptyRows";
 import UserTableToolbar from "./Toolbar";
 import { emptyRows, applyFilter, getComparator } from "./utils";
-
-const colaboradores1: Colaborador[] = [
-  {
-    id: '1',
-    nome: "John Smith",
-    area: "Software Engineer",
-    status: "Active",
-    company: "Google",
-    isVerified: true,
-    password: "123456",
-    email: "  ",
-    acesso: " ",
-  },
-];
+import { colaboradores } from "@/mocks/colaboradores";
 
 export default function UserPage() {
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState<number>(0);
 
-  const [order, setOrder] = useState("asc");
+  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
 
   const [selected, setSelected] = useState<string[]>([]);
 
-  const [orderBy, setOrderBy] = useState("name");
+  const [orderBy, setOrderBy] = useState<string>('name');
 
-  const [filterName, setFilterName] = useState("");
+  const [filterName, setFilterName] = useState<string>('');
 
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [colaboradores, setColaboradores] = useState<Colaborador[]>([]);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(5);
 
-  type Event = React.ChangeEvent<HTMLInputElement>;
-
-  const fetchColaboradores = async () => {
-    const colaboradores = await fetch('http://localhost:3000/api/colaboradores')
-    const data = await colaboradores.json()
-    console.log(data.colaboradores)
-    setColaboradores(data.colaboradores)
-  }
-
-  useEffect(() => {
-    fetchColaboradores()
-  }, []);
-
-  const handleSort = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    id: string
-  ) => {
-    const isAsc = orderBy === id && order === "asc";
-    if (id !== "") {
-      setOrder(isAsc ? "desc" : "asc");
+  const handleSort = (event: React.MouseEvent<unknown>, id: string) => {
+    const isAsc = orderBy === id && order === 'asc';
+    if (id !== '') {
+      setOrder(isAsc ? 'desc' : 'asc');
       setOrderBy(id);
     }
   };
 
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = colaboradores.map((n) => n.nome);
+      const newSelecteds = colaboradores.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    name: string
-  ) => {
+  const handleClick = (event: ChangeEvent<HTMLInputElement>, name: string) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected: string[] = [];
     if (selectedIndex === -1) {
@@ -100,21 +67,16 @@ export default function UserPage() {
     setSelected(newSelected);
   };
 
-  const handleChangePage = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    newPage: number
-  ) => {
+  const handleChangePage = (event: React.MouseEvent<unknown> | null, newPage: number) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
     setPage(0);
     setRowsPerPage(parseInt(event.target.value, 10));
   };
 
-  const handleFilterByName = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFilterByName = (event: ChangeEvent<HTMLInputElement>) => {
     setPage(0);
     setFilterName(event.target.value);
   };
@@ -137,8 +99,7 @@ export default function UserPage() {
       >
         <Typography variant="h4">Colaboradores</Typography>
 
-        <Button variant="contained" color="inherit"
-          onClick={() => fetchColaboradores()}>
+        <Button variant="contained" color="inherit">
           Novo Colaborador
         </Button>
       </Stack>
@@ -165,7 +126,6 @@ export default function UserPage() {
                 { id: "role", label: "Área" },
                 { id: "isVerified", label: "Verified", align: "center" },
                 { id: "status", label: "Status" },
-                { id: "" },
               ]}
             />
             <TableBody>
@@ -174,8 +134,8 @@ export default function UserPage() {
                 .map((row) => (
                   <UserTableRow
                     key={row.id}
-                    name={row.nome}
-                    role={row.area}
+                    name={row.name}
+                    role={row.role}
                     status={row.status}
                     company={row.company}
                     isVerified={row.isVerified}
