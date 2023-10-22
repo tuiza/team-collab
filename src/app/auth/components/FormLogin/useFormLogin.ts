@@ -3,6 +3,7 @@ import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
+import { useState } from "react"
 
 const schemaLogin = z.object({
   email: z.string().email("Email inválido"),
@@ -13,6 +14,7 @@ type FormLoginType = z.infer<typeof schemaLogin>;
 
 export default function useLogin() {
     const router = useRouter()
+    const [errorAuth, setErrorAuth] = useState('');
 
     const { handleSubmit, register, formState: { errors } } = useForm<FormLoginType>(
         {
@@ -34,7 +36,7 @@ export default function useLogin() {
             password: data.senha
         })
         if (result?.error) {
-            alert(result.error)
+            setErrorAuth('Email ou senha inválidos')
         } else {
             router.refresh()
             router.push('/private')
@@ -45,6 +47,7 @@ export default function useLogin() {
         handleSubmit,
         handleFormSubimit,
         register,
-        errors
+        errors,
+        errorAuth
     }
 }

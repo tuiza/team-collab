@@ -15,7 +15,7 @@ import useFormLogin from "./useFormLogin";
 
 export const FormLogin = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const {handleSubmit, handleFormSubimit, errors, register} = useFormLogin();
+    const {handleSubmit, handleFormSubimit, errors, register, errorAuth} = useFormLogin();
     
     const renderForm = (
         <>
@@ -86,6 +86,7 @@ export const FormLogin = () => {
                     }}
                 >
                     <Typography variant="h4" sx={{ mt: 2, mb: 5 }}>Entre no Team Collab</Typography>
+                    {errorAuth && <Typography variant="h5"  sx={{ mt: 2, mb: 5, color: 'red' }}>{errorAuth}</Typography>}
                     {renderForm}
                 </Card>
             </Stack>
