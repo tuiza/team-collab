@@ -14,7 +14,7 @@ import { useResponsive } from '@/hooks/useResponsive';
 
 import navConfig from './navConfig';
 import { NAV } from './configMenu';
-import { account } from '@/mocks/accout';
+import { account } from '@/public/mocks/accout';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
