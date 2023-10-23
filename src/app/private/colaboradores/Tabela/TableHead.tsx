@@ -5,8 +5,7 @@ import TableHead from '@mui/material/TableHead';
 import TableCell, { TableCellProps } from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 
-import { visuallyHidden } from './utils';
-import { MouseEventHandler } from 'react';
+import { visuallyHidden } from '../utils';
 
 interface HeadCell {
   id: string;

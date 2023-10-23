@@ -1,3 +1,4 @@
+'use client'
 import Paper from '@mui/material/Paper';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';

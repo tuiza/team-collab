@@ -1,5 +1,5 @@
 "use client";
-import {  ChangeEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
@@ -11,26 +11,25 @@ import Typography from "@mui/material/Typography";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
 
-import TableNoData from "./NoData";
-import UserTableRow from "./TableRow";
-import UserTableHead from "./TableHead";
-import TableEmptyRows from "./EmptyRows";
-import UserTableToolbar from "./Toolbar";
+import TableNoData from "./Tabela/NoData";
+import UserTableRow from "./Tabela/TableRow";
+import UserTableHead from "./Tabela/TableHead";
+import TableEmptyRows from "./Tabela/EmptyRows";
+import UserTableToolbar from "./Tabela/Toolbar";
 import { emptyRows, applyFilter, getComparator } from "./utils";
-import { colaboradores } from "@/mocks/colaboradores";
+import { colaboradores } from "@/public/mocks/colaboradores";
+import { useRouter } from "next/navigation";
+import NovoColaborador from "./novoColaborador";
 
 export default function UserPage() {
   const [page, setPage] = useState<number>(0);
-
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
-
   const [selected, setSelected] = useState<string[]>([]);
-
   const [orderBy, setOrderBy] = useState<string>('name');
-
   const [filterName, setFilterName] = useState<string>('');
-
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
+  // const { colaboradores } = useAppContext();
+  const [novo, setNovo] = useState(false);
 
   const handleSort = (event: React.MouseEvent<unknown>, id: string) => {
     const isAsc = orderBy === id && order === 'asc';
@@ -42,7 +41,7 @@ export default function UserPage() {
 
   const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = colaboradores.map((n) => n.name);
+      const newSelecteds = colaboradores.map((n) => n.nome);
       setSelected(newSelecteds);
       return;
     }
@@ -91,79 +90,89 @@ export default function UserPage() {
 
   return (
     <Container>
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="space-between"
-        mb={5}
-      >
-        <Typography variant="h4">Colaboradores</Typography>
+      {novo ? <NovoColaborador setNovo={(b: boolean) => setNovo(b)} /> :
+        (<>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            mb={5}
+          >
+            <Typography variant="h4">Colaboradores</Typography>
 
-        <Button variant="contained" color="inherit">
-          Novo Colaborador
-        </Button>
-      </Stack>
+            <Button variant="contained" color="inherit"
+              onClick={() => setNovo(true)}>
+              Novo Colaborador
+            </Button>
+          </Stack>
 
-      <Card>
-        <UserTableToolbar
-          numSelected={selected.length}
-          filterName={filterName}
-          onFilterName={handleFilterByName}
-        />
-
-        <TableContainer sx={{ overflow: "unset" }}>
-          <Table sx={{ minWidth: 800 }}>
-            <UserTableHead
-              order={order}
-              orderBy={orderBy}
-              rowCount={colaboradores.length}
+          <Card>
+            <UserTableToolbar
               numSelected={selected.length}
-              onRequestSort={handleSort}
-              onSelectAllClick={handleSelectAllClick}
-              headLabel={[
-                { id: "name", label: "Nome" },
-                { id: "company", label: "Empresa" },
-                { id: "role", label: "Área" },
-                { id: "isVerified", label: "Verified", align: "center" },
-                { id: "status", label: "Status" },
-              ]}
+              filterName={filterName}
+              onFilterName={handleFilterByName}
             />
-            <TableBody>
-              {dataFiltered
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => (
-                  <UserTableRow
-                    key={row.id}
-                    name={row.name}
-                    role={row.role}
-                    status={row.status}
-                    company={row.company}
-                    isVerified={row.isVerified}
-                    selected={selected.indexOf(row.name) !== -1}
-                    handleClick={(event) => handleClick(event, row.name)}
+
+            <TableContainer sx={{ overflow: "unset" }}>
+              <Table sx={{ minWidth: 800 }}>
+                <UserTableHead
+                  order={order}
+                  orderBy={orderBy}
+                  rowCount={colaboradores.length}
+                  numSelected={selected.length}
+                  onRequestSort={handleSort}
+                  onSelectAllClick={handleSelectAllClick}
+                  headLabel={[
+                    { id: "nome", label: "Nome" },
+                    { id: "areas", label: "Áreas" },
+                    { id: "projetos", label: "Projetos" },
+                    { id: "regimeContratacao", label: "Regime Contratação" },
+                    { id: "idade", label: "Idade" },
+                    { id: "email", label: "Email" },
+                    { id: "status", label: "Status" },
+                  ]}
+                />
+                <TableBody>
+                  {dataFiltered
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row) => (
+                      <UserTableRow
+                        key={row.id}
+                        id="id"
+                        nome={row.nome}
+                        areas={row.areas}
+                        projetos={row.projetos}
+                        regimeContratacao={row.regimeContratacao}
+                        idade={row.idade}
+                        email={row.email}
+                        selected={selected.indexOf(row.nome) !== -1}
+                        handleClick={(event) => handleClick(event, row.name)}
+                      />
+                    ))}
+
+                  <TableEmptyRows
+                    height={77}
+                    emptyRows={emptyRows(page, rowsPerPage, colaboradores.length)}
                   />
-                ))}
 
-              <TableEmptyRows
-                height={77}
-                emptyRows={emptyRows(page, rowsPerPage, colaboradores.length)}
-              />
+                  {notFound && <TableNoData query={filterName} />}
+                </TableBody>
+              </Table>
+            </TableContainer>
 
-              {notFound && <TableNoData query={filterName} />}
-            </TableBody>
-          </Table>
-        </TableContainer>
-
-        <TablePagination
-          page={page}
-          component="div"
-          count={colaboradores.length}
-          rowsPerPage={rowsPerPage}
-          onPageChange={handleChangePage}
-          rowsPerPageOptions={[5, 10, 25]}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Card>
+            <TablePagination
+              page={page}
+              component="div"
+              count={colaboradores.length}
+              rowsPerPage={rowsPerPage}
+              onPageChange={handleChangePage}
+              rowsPerPageOptions={[5, 10, 25]}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Card>
+        </>
+        )
+      }
     </Container>
   );
 }

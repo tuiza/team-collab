@@ -67,7 +67,7 @@ export function applyFilter({
 
   if (filterName) {
     inputData = inputData.filter(
-      (user) => user.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+      (user) => user.nome.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
 

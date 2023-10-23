@@ -4,6 +4,7 @@ import Menu from './components/Menu'
 import StyledComponentsRegistry from './lib/registry'
 import { AuthProvider } from '../../providers/auth-providers'
 import ThemeRegistry from '@/theme/ThemeRegistry/ThemeRegistry'
+import { AppProvider } from '../../providers/appProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,19 +19,19 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <AuthProvider>
-      <html lang="en">
-        <body className={inter.className}>
+    <html lang="en">
+      <body className={inter.className}>
+        <AuthProvider>
           <ThemeRegistry>
             <StyledComponentsRegistry>
               <Menu>
-
-              {children}
+                {children}
               </Menu>
             </StyledComponentsRegistry>
           </ThemeRegistry>
-        </body>
-      </html >
-    </AuthProvider>
+
+        </AuthProvider>
+      </body>
+    </html >
   )
 }

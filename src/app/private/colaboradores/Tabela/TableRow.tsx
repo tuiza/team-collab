@@ -1,3 +1,5 @@
+'use client'
+
 import { ChangeEvent, useState } from 'react';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
@@ -11,24 +13,21 @@ import IconButton from '@mui/material/IconButton';
 
 import { Label } from '@mui/icons-material';
 
-interface UserTableRowProps  {
-  selected: boolean;
-  name: string;
-  company: string;
-  role: string;
-  isVerified: boolean;
-  status: string;
-  handleClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
-};
+import { Colaborador } from '@/types/Colaborador';
 
+export interface UserTableRowProps extends Colaborador {
+  selected: boolean;
+  handleClick: (event: ChangeEvent<HTMLInputElement>) => void;
+}
 
 export default function UserTableRow({
   selected,
-  name,
-  company,
-  role,
-  isVerified,
-  status,
+  nome,
+  areas,
+  email,
+  idade,
+  projetos,
+  regimeContratacao,
   handleClick,
 }: UserTableRowProps) {
   const [open, setOpen] = useState<HTMLElement | null>(null);
@@ -52,20 +51,20 @@ export default function UserTableRow({
           <Stack direction="row" alignItems="center" spacing={2}>
             {/* <Avatar alt={name} src={""} /> */}
             <Typography variant="subtitle2" noWrap>
-              {name}
+              {nome}
             </Typography>
           </Stack>
         </TableCell>
 
-        <TableCell>{company}</TableCell>
+        <TableCell>{areas}</TableCell>
 
-        <TableCell>{role}</TableCell>
-
-        <TableCell align="center">{isVerified ? 'Yes' : 'No'}</TableCell>
-
-        <TableCell>
+        <TableCell>{projetos}</TableCell>
+        <TableCell>{regimeContratacao}</TableCell>
+        <TableCell>{idade}</TableCell>
+        <TableCell>{email}</TableCell>
+      {/*   <TableCell>
           <Label color={(status === 'banned' && 'error') || 'success'}>{status}</Label>
-        </TableCell>
+        </TableCell> */}
 
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>
@@ -80,9 +79,7 @@ export default function UserTableRow({
         onClose={handleCloseMenu}
         anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        PaperProps={{
-          sx: { width: 140 },
-        }}
+        slotProps={{ paper: { sx: { width: 100 } } }}
       >
         <MenuItem onClick={handleCloseMenu}>
          X
