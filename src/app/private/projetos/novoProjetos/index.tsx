@@ -2,20 +2,18 @@
 import {
     Typography,
     MenuItem,
-    OutlinedInput,
 } from '@mui/material';
 
 import useFormColaborador from './useFormColaborador';
 
 import * as S from './styles';
-import { areas } from "@/public/mocks/areas";
 import { regimeContratacao } from "@/public/mocks/regimeDeContratacao";
 
 type NovoColaboradorProps = {
     setNovo: (novo: boolean) => void;
 }
 const NovoColaborador = ({ setNovo }: NovoColaboradorProps) => {
-    const { handleSubmit, handleFormSubimit, errors, register, getValues } = useFormColaborador();
+    const { handleSubmit, handleFormSubimit, errors, register } = useFormColaborador();
 
     const renderForm = (
         <S.FormContainer>

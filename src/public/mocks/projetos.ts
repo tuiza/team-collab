@@ -1,5 +1,5 @@
 
-import { sample, sampleSize } from "lodash";
+import {  sampleSize } from "lodash";
 import { faker } from "@faker-js/faker";
 import { colaboradores } from "./colaboradores";
 import { Projeto } from "@/types/Projeto";
@@ -7,7 +7,7 @@ import { Projeto } from "@/types/Projeto";
 export const projetos: Projeto[]= [...Array(24)].map((_, index) => ({
   id: faker.string.alphanumeric(10),
   nome: faker.company.name(),
-  prazo: '10/10/2021',
+  prazo: new Date(),
   tecnologias: sampleSize(
     [
       'React',

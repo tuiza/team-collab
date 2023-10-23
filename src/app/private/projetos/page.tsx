@@ -5,13 +5,10 @@ import Container from "@mui/material/Container";
 import NovoColaborador from "./novoProjetos";
 import Table from "@/app/components/Tabela";
 import { Stack, Typography, Button } from "@mui/material";
-import { useSession } from "next-auth/react";
 import { useAppContext } from "@/contexts/appContext";
 
 export default function UserPage() {
   const { projetos } = useAppContext();
-  const { data: session } = useSession();
-  const isAdmin = session?.user?.role === "admin";
   const [openNew, setOpenNew] = useState(false);
 
   return (
@@ -28,12 +25,12 @@ export default function UserPage() {
                 mb={5}
               >
                 <Typography variant="h4">Projetos</Typography>
-                {isAdmin && (
+                
                   <Button variant="contained" color="inherit"
                     onClick={() => setOpenNew(true)}>
                     Novo Projeto
                   </Button>
-                )}
+              
               </Stack>
               <Table
                 data={projetos}

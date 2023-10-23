@@ -4,8 +4,6 @@ import { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
-import Avatar from '@mui/material/Avatar';
 import { alpha } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -115,7 +113,6 @@ type NavItemProps = {
     item: {
         title: string;
         path: string;
-        icon: JSX.Element;
     };
 };
 
@@ -145,9 +142,6 @@ function NavItem({ item } : NavItemProps) {
                 }),
             }}
         >
-            <Box component="span" sx={{ width: 24, height: 24, mr: 2 }}>
-                {item.icon}
-            </Box>
 
             <Box component="span">{item.title} </Box>
         </ListItemButton>
