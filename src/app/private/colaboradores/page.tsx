@@ -16,29 +16,46 @@ export default function UserPage() {
 
 
   return (
-    <Container>
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="space-between"
-        mb={5}
-      >
-        <Typography variant="h4">Colaboradores</Typography>
-        {isAdmin && (
-          <Button variant="contained" color="inherit"
-            onClick={() => setOpenNew(true)}>
-            Novo Colaborador
-          </Button>
-        )}
-      </Stack>
-      {openNew ?
-        <NovoColaborador setNovo={setOpenNew} /> :
-        (
-          <Table
-            data={colaboradores}
-            setOpenEdit={setOpenNew}
-          />)
-      }
-    </Container>
+    <>
+      <Container>
+        {openNew ?
+          <NovoColaborador setNovo={setOpenNew} /> :
+          (
+            <>
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+                mb={5}
+              >
+                <Typography variant="h4">Colaboradores</Typography>
+                {isAdmin && (
+                  <Button variant="contained" color="inherit"
+                    onClick={() => setOpenNew(true)}>
+                    Novo Colaborador
+                  </Button>
+                )}
+              </Stack>
+              <Table
+                data={colaboradores}
+                
+                labels={[
+                  { id: 'nome', label: 'Nome' },
+                  { id: 'areas', label: 'Áreas de Atuação' },
+                  { id: 'projetos', label: 'Projetos' },
+                  { id: 'idade', label: 'Idade' },
+                  { id: 'regimeContratacao', label: 'Regime de Contratação' },
+                  { id: 'email', label: 'Email' },
+                  { id: 'telefone', label: 'Telefone'},
+                  { id: 'acoes', label: 'Ações' },
+                ]
+                }
+                setOpenEdit={setOpenNew}
+              />
+            </>
+          )
+        }
+      </Container>
+    </>
   );
 }

@@ -1,23 +1,16 @@
 'use client'
 
-import { ChangeEvent, useState } from 'react';
-import Stack from '@mui/material/Stack';
-import Avatar from '@mui/material/Avatar';
+import { useState } from 'react';
 import Popover from '@mui/material/Popover';
 import TableRow from '@mui/material/TableRow';
-import Checkbox from '@mui/material/Checkbox';
 import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
-import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import { useAppContext } from '@/contexts/appContext';
-
-import { Label } from '@mui/icons-material';
-
-import { Colaborador } from '@/types/Colaborador';
+import { Typography } from '@mui/material';
 
 type UserTableRowProps = {
-  row: Colaborador
+  row: { [key: string]: any }
   setOpenEdit: (open: boolean) => void
 }
 
@@ -44,18 +37,21 @@ export default function UserTableRow({ row, setOpenEdit }: UserTableRowProps) {
   return (
     <>
       <TableRow hover tabIndex={-1} role="checkbox">
+        {
+          Object.keys(row).filter((r)=> r !== 'id').map((key) => {
+            if (key !== 'nome') {
+              return <TableCell key={key} >{row[key]}</TableCell>
+            } else {
+              return <TableCell key={key} >
+                <Typography noWrap>
+                  {row.nome}
+                </Typography>
+              </TableCell>
+            }
+          }
+          )
+        }
 
-        <TableCell component="th" scope="row" padding="normal">
-          <Stack direction="row" alignItems="center" spacing={2}>
-            <Typography variant="subtitle2" noWrap>
-              {row.nome}
-            </Typography>
-          </Stack>
-        </TableCell>
-        <TableCell>{row.areas}</TableCell>
-        <TableCell>{row.idade}</TableCell>
-        <TableCell>{row.email}</TableCell>
-        <TableCell>{row.regimeContratacao}</TableCell>
 
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>

@@ -1,4 +1,4 @@
-"use client";
+
 import { sample, sampleSize } from "lodash";
 import { faker } from "@faker-js/faker";
 import { Colaborador } from "@/types/Colaborador";

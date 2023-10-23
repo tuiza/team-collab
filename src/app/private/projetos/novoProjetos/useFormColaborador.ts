@@ -20,7 +20,7 @@ export default function useFormColaborador() {
     defaultValues: {
       email: "",
       nome: "",
-      areas: [""],
+      areas: [],
       idade: 0,
       regimeContratacao: "",
     },

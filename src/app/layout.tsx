@@ -4,7 +4,6 @@ import Menu from './components/Menu'
 import StyledComponentsRegistry from './lib/registry'
 import { AuthProvider } from '../../providers/auth-providers'
 import ThemeRegistry from '@/theme/ThemeRegistry/ThemeRegistry'
-import { AppProvider } from '../../providers/appProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -29,7 +28,6 @@ export default function RootLayout({
               </Menu>
             </StyledComponentsRegistry>
           </ThemeRegistry>
-
         </AuthProvider>
       </body>
     </html >

@@ -1,17 +1,12 @@
-import { useSession } from "next-auth/react";
 import { ChangeEvent, useState } from "react";
 import { applyFilter, getComparator } from "@/utils/utils";
-import { HeadCell } from "./TableHead";
 
-export default function useTable(data) {
+export default function useTable(data: { [key: string]: any }[]) {
   const [page, setPage] = useState<number>(0);
   const [order, setOrder] = useState<"asc" | "desc">("asc");
   const [orderBy, setOrderBy] = useState<string>("name");
   const [filterName, setFilterName] = useState<string>("");
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
-  const [novo, setNovo] = useState(false);
-  const { data: session } = useSession();
-  const isAdmin = session?.user?.role === "admin";
 
   const handleSort = (event: React.MouseEvent<unknown>, id: string) => {
     const isAsc = orderBy === id && order === "asc";
@@ -38,8 +33,6 @@ export default function useTable(data) {
     setFilterName(event.target.value);
     };
     
-    console.log(data)
-
   const dataFiltered = applyFilter({
     inputData: data,
     comparator: getComparator(order, orderBy),
@@ -48,27 +41,11 @@ export default function useTable(data) {
 
   const notFound = !dataFiltered.length && !!filterName;
 
-  const getLabels = (): HeadCell[] => {
-    let labels: HeadCell[] = [
-      { id: "nome", label: "Nome" },
-      { id: "areas", label: "Áreas" },
-      { id: "idade", label: "Idade" },
-      { id: "email", label: "Email" },
-      { id: "status", label: "Status" },
-    ];
-    if (isAdmin) {
-      labels.push({ id: "regimeContratacao", label: "Regime Contratação" });
-    }
-    return labels;
-  };
-
   return {
     handleSort,
     handleChangePage,
     handleChangeRowsPerPage,
     handleFilterByName,
-    getLabels,
-    isAdmin,
     notFound,
     dataFiltered,
     rowsPerPage,

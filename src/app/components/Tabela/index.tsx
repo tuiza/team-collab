@@ -1,4 +1,4 @@
-
+'use client'
 import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
 import ComponentTable from "@mui/material/Table";
@@ -19,13 +19,13 @@ import TableNoData from "./NoData";
 import TableEmptyRows from "./EmptyRows";
 
 type TableProps = {
-    data: any
+    data: { [key: string]: any }[]
     setOpenEdit: (open: boolean) => void
+    labels: { id: string, label: string }[]
 }
 
-const Table = ({ data, setOpenEdit }: TableProps) => {
+const Table = ({ data, setOpenEdit, labels }: TableProps) => {
     const {
-        getLabels,
         handleChangePage,
         handleChangeRowsPerPage,
         notFound,
@@ -51,9 +51,9 @@ const Table = ({ data, setOpenEdit }: TableProps) => {
                             order={order}
                             orderBy={orderBy}
                             onRequestSort={handleSort}
-                            headLabel={getLabels()}
+                            headLabel={labels}
                             openEdit={setOpenEdit}
-                            
+
                         />
                         <TableBody>
                             {dataFiltered
