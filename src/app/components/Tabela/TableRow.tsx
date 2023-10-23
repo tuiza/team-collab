@@ -10,27 +10,32 @@ import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import { useAppContext } from '@/contexts/appContext';
 
 import { Label } from '@mui/icons-material';
 
 import { Colaborador } from '@/types/Colaborador';
 
-export interface UserTableRowProps extends Colaborador {
+type UserTableRowProps = {
+  row: Colaborador
+  setOpenEdit: (open: boolean) => void
 }
 
-export default function UserTableRow({
-  nome,
-  areas,
-  email,
-  idade,
-  projetos,
-  regimeContratacao,
-}: UserTableRowProps) {
+export default function UserTableRow({ row, setOpenEdit }: UserTableRowProps) {
   const [open, setOpen] = useState<HTMLElement | null>(null);
+  const { removerColaborador } = useAppContext()
 
-  const handleOpenMenu = (event: React.ChangeEvent<HTMLInputElement> ) => {
+  const handleOpenMenu = (event: React.ChangeEvent<HTMLInputElement>) => {
     setOpen(event.currentTarget);
   };
+
+  function handleDelete() {
+    removerColaborador(row.id)
+  }
+
+  function handleEdit() {
+    setOpenEdit(true)
+  }
 
   const handleCloseMenu = () => {
     setOpen(null);
@@ -43,19 +48,18 @@ export default function UserTableRow({
         <TableCell component="th" scope="row" padding="normal">
           <Stack direction="row" alignItems="center" spacing={2}>
             <Typography variant="subtitle2" noWrap>
-              {nome}
+              {row.nome}
             </Typography>
           </Stack>
         </TableCell>
-        <TableCell>{areas}</TableCell>
-        <TableCell>{projetos}</TableCell>
-        <TableCell>{regimeContratacao}</TableCell>
-        <TableCell>{idade}</TableCell>
-        <TableCell>{email}</TableCell>
+        <TableCell>{row.areas}</TableCell>
+        <TableCell>{row.idade}</TableCell>
+        <TableCell>{row.email}</TableCell>
+        <TableCell>{row.regimeContratacao}</TableCell>
 
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>
-          *
+            *
           </IconButton>
         </TableCell>
       </TableRow>
@@ -68,12 +72,12 @@ export default function UserTableRow({
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         slotProps={{ paper: { sx: { width: 100 } } }}
       >
-        <MenuItem onClick={handleCloseMenu}>
-         X
+        <MenuItem onClick={handleEdit}>
+          +
           Edit
         </MenuItem>
 
-        <MenuItem onClick={handleCloseMenu} sx={{ color: 'error.main' }}>
+        <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
           X
           Delete
         </MenuItem>

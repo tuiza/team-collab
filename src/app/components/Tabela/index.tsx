@@ -20,17 +20,15 @@ import TableEmptyRows from "./EmptyRows";
 
 type TableProps = {
     data: any
-    btnCreateLabel?: string
+    setOpenEdit: (open: boolean) => void
 }
 
-const Table = ({ data }: TableProps) => {
-    const [openNew, setOpenNew] = useState(false);
+const Table = ({ data, setOpenEdit }: TableProps) => {
     const {
         getLabels,
         handleChangePage,
         handleChangeRowsPerPage,
         notFound,
-        isAdmin,
         dataFiltered,
         handleSort,
         rowsPerPage,
@@ -42,27 +40,11 @@ const Table = ({ data }: TableProps) => {
     } = useTable(data)
     return (
         <>
-            <Stack
-                direction="row"
-                alignItems="center"
-                justifyContent="space-between"
-                mb={5}
-            >
-                <Typography variant="h4">Colaboradores</Typography>
-                {isAdmin && (
-                    <Button variant="contained" color="inherit"
-                        onClick={() => setOpenNew(true)}>
-                        Novo Colaborador
-                    </Button>
-                )}
-            </Stack>
-
             <Card>
                 <UserTableToolbar
                     filterName={filterName}
                     onFilterName={handleFilterByName}
                 />
-
                 <TableContainer sx={{ overflow: "unset" }}>
                     <ComponentTable sx={{ minWidth: 800 }}>
                         <UserTableHead
@@ -70,6 +52,8 @@ const Table = ({ data }: TableProps) => {
                             orderBy={orderBy}
                             onRequestSort={handleSort}
                             headLabel={getLabels()}
+                            openEdit={setOpenEdit}
+                            
                         />
                         <TableBody>
                             {dataFiltered
@@ -77,13 +61,8 @@ const Table = ({ data }: TableProps) => {
                                 .map((row) => (
                                     <UserTableRow
                                         key={row.id}
-                                        id="id"
-                                        nome={row.nome}
-                                        areas={row.areas}
-                                        projetos={row.projetos}
-                                        regimeContratacao={row.regimeContratacao}
-                                        idade={row.idade}
-                                        email={row.email}
+                                        row={row}
+                                        setOpenEdit={setOpenEdit}
                                     />
                                 ))}
 

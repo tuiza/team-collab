@@ -19,6 +19,7 @@ interface ColaboradoresTableHeadProps {
   orderBy: string | undefined;
   headLabel: HeadCell[];
   onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
+  openEdit: (open: boolean) => void
 }
 
 export default function UserTableHead({

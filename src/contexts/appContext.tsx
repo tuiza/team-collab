@@ -36,7 +36,8 @@ const AppProvider = ({ children }: ContextProviderProps) => {
     ]);
   };
 
-  const removerColaborador = (id: number) => {
+  const removerColaborador = (id: string) => {
+    console.log('apagando')
     setColaboradores((prevColaboradores) =>
       prevColaboradores.filter((colaborador) => colaborador.id !== id)
     );
@@ -46,7 +47,7 @@ const AppProvider = ({ children }: ContextProviderProps) => {
     setProjetos((prevProjetos) => [...prevProjetos, projeto]);
   };
 
-  const removerProjeto = (id: number) => {
+  const removerProjeto = (id: string) => {
     setProjetos((prevProjetos) =>
       prevProjetos.filter((projeto) => projeto.id !== id)
     );

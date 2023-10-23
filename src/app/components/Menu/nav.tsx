@@ -66,10 +66,7 @@ export default function Nav({ openNav, onCloseNav }: NavProps) {
 
     const renderContent = (
         <Stack spacing={3} sx={{ height: 1 }}>
-        
-
             {renderAccount}
-
             {renderMenu}
 
             <Box sx={{ flexGrow: 1 }} />

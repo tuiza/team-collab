@@ -48,20 +48,18 @@ export default function useTable(data) {
 
   const notFound = !dataFiltered.length && !!filterName;
 
-  const getLabels = (): HeadCell => {
-    let labels = [
+  const getLabels = (): HeadCell[] => {
+    let labels: HeadCell[] = [
       { id: "nome", label: "Nome" },
       { id: "areas", label: "Áreas" },
-      { id: "projetos", label: "Projetos" },
       { id: "idade", label: "Idade" },
       { id: "email", label: "Email" },
       { id: "status", label: "Status" },
     ];
     if (isAdmin) {
-      return labels.push(
-        ...[{ id: "regimeContratacao", label: "Regime Contratação" }]
-      );
-    } else return labels;
+      labels.push({ id: "regimeContratacao", label: "Regime Contratação" });
+    }
+    return labels;
   };
 
   return {

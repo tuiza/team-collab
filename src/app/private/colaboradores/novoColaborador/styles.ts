@@ -19,12 +19,14 @@ export const Container = styled.div`
   flex-direction: column;
 `;
 
-export const Form = styled.form`
+export const FormContainer = styled.form`
+`
+
+export const Form = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   gap: 20px;
-
 `;
 
 export const InputText = styled(TextField)`
@@ -37,8 +39,8 @@ export const InputSelect = styled(Select)`
 `;
 
 export const Button = styled(LoadingButton)`
-    align-self: flex-end;
-    justify-self: flex-end;
-    justify-content: flex-end;
-    align-items: flex-end;
+    position: relative;
+    left: 80%;
+    
+
 `

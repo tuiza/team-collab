@@ -1,22 +1,14 @@
 'use client'
-import { useState } from "react"
 import {
-    Box,
-    Card,
-    Stack,
-    TextField,
     Typography,
-    IconButton,
-    InputAdornment,
-    Container,
     MenuItem,
-    Select
+    Box
 } from '@mui/material';
 
 import useFormColaborador from './useFormColaborador';
 
 import * as S from './styles';
-import { areasLabelValue } from "@/public/mocks/areas";
+import { areas } from "@/public/mocks/areas";
 import { regimeContratacao } from "@/public/mocks/regimeDeContratacao";
 
 type NovoColaboradorProps = {
@@ -26,7 +18,7 @@ const NovoColaborador = ({ setNovo }: NovoColaboradorProps) => {
     const { handleSubmit, handleFormSubimit, errors, register, getValues } = useFormColaborador();
 
     const renderForm = (
-        <>
+        <S.FormContainer>
             <S.Form onSubmit={handleSubmit(handleFormSubimit)}>
                 <S.InputText
                     {...register('nome', { required: true })}
@@ -44,7 +36,7 @@ const NovoColaborador = ({ setNovo }: NovoColaboradorProps) => {
 
                 />
                 <S.InputText
-                    {...register('idade', {required: true, setValueAs: (value: string) => parseInt(value, 10)})}
+                    {...register('idade', { required: true, setValueAs: (value: string) => parseInt(value, 10) })}
                     name="idade"
                     type="number"
                     label="Idade"
@@ -52,9 +44,10 @@ const NovoColaborador = ({ setNovo }: NovoColaboradorProps) => {
                     helperText={errors?.idade?.message}
                 />
                 <S.InputText
-                    {...register('regimeContratacao', { required: true})}
+                    {...register('regimeContratacao', { required: true })}
                     name="regimeContratacao"
                     select
+                    
                     label="Regime de Contratação"
                     error={Boolean(errors?.regimeContratacao)}
                     helperText={errors?.regimeContratacao?.message}
@@ -70,36 +63,36 @@ const NovoColaborador = ({ setNovo }: NovoColaboradorProps) => {
                 <S.InputSelect
                     {...register('areas', { required: true })}
                     name="areas"
-                    value={getValues('areas')}
+                    value={[]}
                     multiple
                     label="Áreas de Atuação"
                     error={Boolean(errors?.areas)}
                 >
-                    {areasLabelValue.map((option) => (
-                        <MenuItem key={option.label} value={option.label}>
-                            {option.label}
+                    {areas.map((option) => (
+                        <MenuItem key={option} value={option}>
+                            {option}
                         </MenuItem>
                     ))}
                 </S.InputSelect>
-                <S.Button
-                    loading={false}
-                    size="large"
-                    type="submit"
-                    variant="contained"
-                    color="inherit"
-                >
-                    Criar Colaborador
-                </S.Button>
             </S.Form>
-        </>
+            <S.Button
+                loading={false}
+                size="large"
+                type="submit"
+                variant="contained"
+                color="inherit"
+            >
+                Criar Colaborador
+            </S.Button>
+        </S.FormContainer>
     );
     return (
-        <S.Container>
+        <Box spacing={3}>
             <Typography variant="h4" sx={{ mt: 2, mb: 5 }}>
                 Criar novo Colaborador
             </Typography>
             {renderForm}
-        </S.Container>
+        </Box>
     )
 }
 
