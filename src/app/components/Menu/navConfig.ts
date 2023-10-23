@@ -1,7 +1,7 @@
 const navConfig = [
   {
     title: "colaboradores",
-    path: "/private/projetos",
+    path: "/private/colaboradores",
   },
   {
     title: "projetos",
