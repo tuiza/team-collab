@@ -1,10 +1,10 @@
 'use client'
 import { Colaborador } from "@/types/Colaborador";
-import { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useState, useContext} from "react";
 import { colaboradores as mockColaboradores } from "@/public/mocks/colaboradores";
 import { projetos as mockProjetos } from "@/public/mocks/projetos";
 import { Projeto } from "@/types/Projeto";
-import { set } from "lodash";
+
 
 type ContextProviderProps = {
   children: React.ReactNode;
@@ -33,11 +33,6 @@ const AppProvider = ({ children }: ContextProviderProps) => {
   const [colaboradores, setColaboradores] = useState<Colaborador[]>(mockColaboradores);
   const [projetos, setProjetos] = useState<Projeto[]>(mockProjetos);
 
-  useEffect(() => {
-    setColaboradores(mockColaboradores)
-    setProjetos(mockProjetos)
-  }, [])
-
   const adicionarColaborador = (colaborador: Colaborador) => {
     setColaboradores((prevColaboradores) => [
       ...prevColaboradores,
@@ -61,6 +56,7 @@ const AppProvider = ({ children }: ContextProviderProps) => {
     );
   };
 
+
   const value = {
     colaboradores,
     projetos,
@@ -68,7 +64,7 @@ const AppProvider = ({ children }: ContextProviderProps) => {
     removerColaborador,
     adicionarProjeto,
     removerProjeto,
-  };
+  }
 
   return (
     <AppContext.Provider

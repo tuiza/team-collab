@@ -1,13 +1,11 @@
 'use client'
-
 import { useState } from 'react';
 import Popover from '@mui/material/Popover';
 import TableRow from '@mui/material/TableRow';
 import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
-import IconButton from '@mui/material/IconButton';
 import { useAppContext } from '@/contexts/appContext';
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 
 type UserTableRowProps = {
   row: { [key: string]: any }
@@ -18,7 +16,7 @@ export default function UserTableRow({ row, setOpenEdit }: UserTableRowProps) {
   const [open, setOpen] = useState<HTMLElement | null>(null);
   const { removerColaborador } = useAppContext()
 
-  const handleOpenMenu = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleOpenMenu = (event: any) => {
     setOpen(event.currentTarget);
   };
 
@@ -52,11 +50,10 @@ export default function UserTableRow({ row, setOpenEdit }: UserTableRowProps) {
           )
         }
 
-
         <TableCell align="right">
-          <IconButton onClick={handleOpenMenu}>
+          <Button variant="contained" color="inherit" onClick={handleOpenMenu}>
             *
-          </IconButton>
+          </Button>
         </TableCell>
       </TableRow>
 

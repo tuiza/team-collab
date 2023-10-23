@@ -7,7 +7,6 @@ import { Projeto } from "@/types/Projeto";
 export const projetos: Projeto[]= [...Array(24)].map((_, index) => ({
   id: faker.string.alphanumeric(10),
   nome: faker.company.name(),
-  prazo: new Date(),
   tecnologias: sampleSize(
     [
       'React',

@@ -36,7 +36,6 @@ export default function UserPage() {
                 data={projetos}
                 labels={[
                   { id: 'nome', label: 'Nome' },
-                  { id: 'prazo', label: 'Prazo' },
                   {id: 'tecnlogias', label: 'Tecnologias'},
                   { id: 'colaboradores', label: 'Colaboradores' },
                   { id: 'descricao', label: 'Descrição' },
