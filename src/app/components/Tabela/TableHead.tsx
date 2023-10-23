@@ -1,10 +1,10 @@
 import Box from '@mui/material/Box';
 import TableRow from '@mui/material/TableRow';
+import Checkbox from '@mui/material/Checkbox';
 import TableHead from '@mui/material/TableHead';
 import TableCell, { TableCellProps } from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
-
-import { visuallyHidden } from '../../../../utils/utils';
+import { visuallyHidden } from '@/utils/utils';
 
 export interface HeadCell {
   id: string;

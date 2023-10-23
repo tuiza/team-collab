@@ -27,8 +27,6 @@ export default function Menu({ onOpenNav }: MenuProps) {
                 </IconButton>
             )}
 
-            {/* <Searchbar /> */}
-
             <Box sx={{ flexGrow: 1 }} />
         </>
     );

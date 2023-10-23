@@ -2,9 +2,10 @@
 
 import { ChangeEvent, useState } from 'react';
 import Stack from '@mui/material/Stack';
+import Avatar from '@mui/material/Avatar';
 import Popover from '@mui/material/Popover';
 import TableRow from '@mui/material/TableRow';
-
+import Checkbox from '@mui/material/Checkbox';
 import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
@@ -15,11 +16,9 @@ import { Label } from '@mui/icons-material';
 import { Colaborador } from '@/types/Colaborador';
 
 export interface UserTableRowProps extends Colaborador {
-  selected: boolean;
 }
 
 export default function UserTableRow({
-  selected,
   nome,
   areas,
   email,
@@ -39,7 +38,7 @@ export default function UserTableRow({
 
   return (
     <>
-      <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
+      <TableRow hover tabIndex={-1} role="checkbox">
 
         <TableCell component="th" scope="row" padding="normal">
           <Stack direction="row" alignItems="center" spacing={2}>
