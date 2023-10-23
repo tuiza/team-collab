@@ -15,7 +15,7 @@ import useFormLogin from "./useFormLogin";
 
 export const FormLogin = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const {handleSubmit, handleFormSubimit, errors, register, errorAuth} = useFormLogin();
+    const {handleSubmit, handleFormSubimit, errors, register, errorAuth, loading} = useFormLogin();
     
     const renderForm = (
         <>
@@ -54,6 +54,7 @@ export const FormLogin = () => {
                     type="submit"
                     variant="contained"
                     color="inherit"
+                    loading={loading}
                 >
                     Entrar
                 </LoadingButton>

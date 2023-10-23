@@ -15,6 +15,7 @@ type FormLoginType = z.infer<typeof schemaLogin>;
 export default function useLogin() {
     const router = useRouter()
     const [errorAuth, setErrorAuth] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const { handleSubmit, register, formState: { errors } } = useForm<FormLoginType>(
         {
@@ -28,18 +29,22 @@ export default function useLogin() {
         }
     )
     
-
     const handleFormSubimit = async (data: any) => {
-        const result = await signIn('credentials', {
-            redirect: false,
-            email: data.email,
-            password: data.senha
-        })
-        if (result?.error) {
+        try {
+            setLoading(true)
+            const result = await signIn('credentials', {
+                redirect: false,
+                email: data.email,
+                password: data.senha
+            })
+            router.refresh();
+            router.push("/private/colaboradores");
+        }
+        catch (error) {
             setErrorAuth('Email ou senha inválidos')
-        } else {
-            router.refresh()
-            router.push('/private')
+        }
+        finally {
+            setLoading(false)
         }
     }
 
@@ -48,6 +53,7 @@ export default function useLogin() {
         handleFormSubimit,
         register,
         errors,
-        errorAuth
+        errorAuth, 
+        loading
     }
 }
