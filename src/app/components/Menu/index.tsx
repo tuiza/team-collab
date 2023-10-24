@@ -7,6 +7,7 @@ import Nav from './nav';
 import Main from './main';
 import Header from './header';
 
+import { useSession } from 'next-auth/react';
 
 type DashboardLayoutProps = {
     children: React.ReactNode;
@@ -14,22 +15,24 @@ type DashboardLayoutProps = {
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
     const [openNav, setOpenNav] = useState(false);
+    const { data: session } = useSession();
 
     return (
-        <>
-            <Header onOpenNav={() => setOpenNav(true)} />
+        <Box
+            sx={{
+                minHeight: 1,
+                display: 'flex',
+                flexDirection: { xs: 'column', lg: 'row' },
+            }}
+        >
+            {session && (
+                <>
+                    <Header onOpenNav={() => setOpenNav(true)} />
+                    <Nav openNav={openNav} onCloseNav={() => setOpenNav(false)} />
+                </>
+            )}
 
-            <Box
-                sx={{
-                    minHeight: 1,
-                    display: 'flex',
-                    flexDirection: { xs: 'column', lg: 'row' },
-                }}
-            >
-                <Nav openNav={openNav} onCloseNav={() => setOpenNav(false)} />
-
-                <Main>{children}</Main>
-            </Box>
-        </>
+            <Main>{children}</Main>
+        </Box>
     );
 }
