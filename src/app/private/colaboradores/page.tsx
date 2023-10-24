@@ -26,16 +26,16 @@ export default function UserPage() {
                 mb={5}
               >
                 <Typography variant="h4">Colaboradores</Typography>
-                
-                  <Button variant="contained" color="inherit"
-                    onClick={() => setOpenNew(true)}>
-                    Novo Colaborador
-                  </Button>
-              
+
+                <Button variant="contained" color="inherit"
+                  onClick={() => setOpenNew(true)}>
+                  Novo Colaborador
+                </Button>
+
               </Stack>
               <Table
                 data={colaboradores}
-                
+
                 labels={[
                   { id: 'nome', label: 'Nome' },
                   { id: 'areas', label: 'Áreas de Atuação' },
@@ -43,7 +43,7 @@ export default function UserPage() {
                   { id: 'idade', label: 'Idade' },
                   { id: 'regimeContratacao', label: 'Regime de Contratação' },
                   { id: 'email', label: 'Email' },
-                  { id: 'telefone', label: 'Telefone'},
+                  { id: 'telefone', label: 'Telefone' },
                   { id: 'acoes', label: 'Ações' },
                 ]
                 }

@@ -2,39 +2,61 @@
 import {
     Typography,
     MenuItem,
-    OutlinedInput,
+    Grid,
+    TextField,
+    styled,
+    Box
+
 } from '@mui/material';
 
-import useFormColaborador from './useFormColaborador';
+import LoadingButton from '@mui/lab/LoadingButton';
 
-import * as S from './styles';
-import { areas } from "@/public/mocks/areas";
+import useFormColaborador from './useFormColaborador';
 import { regimeContratacao } from "@/public/mocks/regimeDeContratacao";
+import { useResponsive } from '@/hooks/useResponsive';
 
 type NovoColaboradorProps = {
     setNovo: (novo: boolean) => void;
 }
 const NovoColaborador = ({ setNovo }: NovoColaboradorProps) => {
-    const { handleSubmit, handleFormSubimit, errors, register, getValues } = useFormColaborador();
+    const { handleSubmit, handleFormSubimit, errors, register } = useFormColaborador();
+    const isMobile = useResponsive('down', 'sm')
+
+    const MyGrid = styled(Grid)(() => ({
+        width: isMobile ? '100%' : '50%',
+    }));
+
 
     const renderForm = (
-        <S.FormContainer>
-            <S.Form onSubmit={handleSubmit(handleFormSubimit)}>
-                <S.InputText
+        <Grid onSubmit={handleSubmit(handleFormSubimit)} container spacing={2}>
+            <Grid item xs={12}>
+                <Typography variant="h6">
+                    Dados Pessoais
+                </Typography>
+            </Grid>
+            {}
+            <MyGrid item >
+                <TextField
                     {...register('nome', { required: true })}
                     name="nome"
                     label="Nome"
                     error={Boolean(errors?.nome)}
                     helperText={errors?.nome?.message}
+                    fullWidth
                 />
-                <S.InputText
+            </MyGrid>
+            <MyGrid item >
+                <TextField
                     {...register('email', { required: true })}
                     name="email"
                     label="Email"
                     error={Boolean(errors?.email)}
                     helperText={errors?.email?.message}
+                    fullWidth
                 />
-                <S.InputText
+            </MyGrid>
+            <MyGrid item>
+                <TextField
                     {...register('idade', { required: true, setValueAs: (value: string) => parseInt(value, 10) })}
                     name="idade"
                     type="number"
@@ -42,14 +64,16 @@ const NovoColaborador = ({ setNovo }: NovoColaboradorProps) => {
                     error={Boolean(errors?.idade)}
                     helperText={errors?.idade?.message}
                 />
-                <S.InputText
+            </MyGrid>
+            <MyGrid item xs={6}>
+                <TextField
                     {...register('regimeContratacao', { required: true })}
                     name="regimeContratacao"
                     select
-                    
                     label="Regime de Contratação"
                     error={Boolean(errors?.regimeContratacao)}
                     helperText={errors?.regimeContratacao?.message}
+                    fullWidth
                 >
                     {regimeContratacao.map((option) => (
                         <MenuItem key={option} value={option}>
@@ -57,9 +81,10 @@ const NovoColaborador = ({ setNovo }: NovoColaboradorProps) => {
                         </MenuItem>
                     ))}
 
-                </S.InputText>
+                </TextField>
+            </MyGrid>
 
-                {/* <S.InputSelect
+            {/* <S.InputSelect
                     {...register('areas', {
                         required: true,
                     })}
@@ -77,25 +102,41 @@ const NovoColaborador = ({ setNovo }: NovoColaboradorProps) => {
                         </MenuItem>
                     ))}
                 </S.InputSelect> */}
-            <S.Button
-                loading={false}
-                size="large"
-                type='submit'
-                variant="contained"
-                color="inherit"
-            >
-                Criar Colaborador
-            </S.Button>
-            </S.Form>
-        </S.FormContainer>
+            <Grid container sx={{my: 8, mx: 2}}>
+                <Grid item xs={6}>
+                    <LoadingButton
+                        loading={false}
+                        size="large"
+                        type='submit'
+                        variant="contained"
+                        color="inherit"
+                        onClick={() => setNovo(false)}
+                    >
+                        Voltar
+                    </LoadingButton>
+                </Grid>
+                <Grid item xs={6}>
+                    <LoadingButton
+                        loading={false}
+                        size="large"
+                        type='submit'
+                        variant="contained"
+                        color="inherit"
+                        onClick={() => setNovo(true)}
+                    >
+                        Criar Colaborador
+                    </LoadingButton>
+                </Grid>
+            </Grid>
+        </Grid>
     );
     return (
-        <S.Container>
+        <Box>
             <Typography variant="h4" sx={{ mt: 2, mb: 5 }}>
                 Criar novo Colaborador
             </Typography>
             {renderForm}
-        </S.Container>
+        </Box>
     )
 }
 
