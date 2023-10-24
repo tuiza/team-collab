@@ -6,8 +6,8 @@ import * as z from "zod"
 import { useState } from "react"
 
 const schemaLogin = z.object({
-  email: z.string().email("Email inválido"),
-  senha: z.string().min(2, "Senha inválida").max(100),
+  email: z.string().email("Por favor, insira um email válido."),
+  senha: z.string().min(3, "Por favor, insira uma senha").max(100),
 });
 
 type FormLoginType = z.infer<typeof schemaLogin>;
@@ -16,6 +16,7 @@ export default function useLogin() {
     const router = useRouter()
     const [errorAuth, setErrorAuth] = useState('');
     const [loading, setLoading] = useState(false);
+    
 
     const { handleSubmit, register, formState: { errors } } = useForm<FormLoginType>(
         {
@@ -37,8 +38,11 @@ export default function useLogin() {
                 email: data.email,
                 password: data.senha
             })
-            router.refresh();
-            router.push("/private/colaboradores");
+            if (result?.ok) {
+                router.refresh();
+                router.push('/private/colaboradores')
+            }
+            setErrorAuth("Email ou senha inválidos");
         }
         catch (error) {
             setErrorAuth('Email ou senha inválidos')

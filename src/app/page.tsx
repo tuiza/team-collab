@@ -1,5 +1,5 @@
-'use client'
-import { FormLogin } from "../app/auth/components/FormLogin/FormLogin";
+
+import FormLogin from "./components/FormLogin"
 
 interface LoginProps { }
 

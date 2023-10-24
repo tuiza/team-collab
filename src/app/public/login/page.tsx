@@ -1,12 +1,13 @@
-'use client'
-import { FormLogin } from "../../auth/components/FormLogin/FormLogin";
+import FormLogin from "../../components/FormLogin";
+
+import { Container } from "@mui/material";
 
 interface LoginProps { }
 
 export default function Login(props: LoginProps) {
     return (
-        <div>
+        <Container sx={{alignItems: 'center', justifyContent: 'center', display: 'flex'}} >
             <FormLogin />
-        </div>
+        </Container>
     )
 }

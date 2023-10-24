@@ -8,19 +8,31 @@ import {
     Typography,
     IconButton,
     InputAdornment,
+    Alert,
+    useTheme
 } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { useResponsive } from '@/hooks/useResponsive';
 
 import useFormLogin from "./useFormLogin";
 
-export const FormLogin = () => {
+const FormLogin = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const {handleSubmit, handleFormSubimit, errors, register, errorAuth, loading} = useFormLogin();
+    const { handleSubmit, handleFormSubimit, errors, register, errorAuth, loading } = useFormLogin();
+    const [dark, setDark] = useState(false);
+    const theme = useTheme();
+    const r = useResponsive('up', 'md')
     
+    const handleDarkMode = () => {
+        theme.palette.mode = dark ? 'light' : 'dark';
+        setDark((prev) => !prev);
+    }
+
     const renderForm = (
         <>
             <form onSubmit={handleSubmit(handleFormSubimit)}>
                 <Stack spacing={3}>
+                    {errorAuth && <Alert severity="error">{errorAuth}</Alert>}
                     <TextField
                         {...register('email', { required: true })}
                         name="email"
@@ -58,6 +70,12 @@ export const FormLogin = () => {
                 >
                     Entrar
                 </LoadingButton>
+                <LoadingButton
+                    onClick={handleDarkMode}
+                    loading={loading}
+                >
+                    dark
+                </LoadingButton>
             </form>
         </>
     );
@@ -68,29 +86,23 @@ export const FormLogin = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                mx: 2,
             }}
         >
-            {/* <Logo
-                sx={{
-                    position: 'fixed',
-                    top: { xs: 16, md: 24 },
-                    left: { xs: 16, md: 24 },
-                }}
-            /> */}
-
-            <Stack alignItems="center" justifyContent="center" sx={{ height: 1 }}>
                 <Card
                     sx={{
                         p: 5,
                         width: 1,
-                        maxWidth: 420,
+                        maxWidth: 500,
                     }}
                 >
                     <Typography variant="h4" sx={{ mt: 2, mb: 5 }}>Entre no Team Collab</Typography>
-                    {errorAuth && <Typography variant="h5"  sx={{ mt: 2, mb: 5, color: 'red' }}>{errorAuth}</Typography>}
+                    
                     {renderForm}
                 </Card>
-            </Stack>
+            
         </Box>
     )
 }
+
+export default FormLogin
