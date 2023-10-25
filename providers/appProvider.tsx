@@ -1,15 +1,13 @@
 'use client'
-
-import A from "@/contexts/appContext"
-
+import AppContext from "@/contexts/appContext"
 interface AppProviderProps {
     children: React.ReactNode
 }
 
 export const AppProvider = ({ children }: AppProviderProps) => {
     return (
-        <A>
+        <AppContext>
             {children}
-        </A>
+        </AppContext>
     )
 }

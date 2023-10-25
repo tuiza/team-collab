@@ -5,7 +5,8 @@ import {
     Grid,
     TextField,
     styled,
-    Box
+    Box,
+    Select
 
 } from '@mui/material';
 
@@ -14,12 +15,13 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import useFormColaborador from './useFormColaborador';
 import { regimeContratacao } from "@/public/mocks/regimeDeContratacao";
 import { useResponsive } from '@/hooks/useResponsive';
+import { projetos } from '@/public/mocks/projetos';
 
 type NovoColaboradorProps = {
     setNovo: (novo: boolean) => void;
 }
 const NovoColaborador = ({ setNovo }: NovoColaboradorProps) => {
-    const { handleSubmit, handleFormSubimit, errors, register } = useFormColaborador();
+    const { handleSubmit, handleFormSubimit, errors, register, getValues} = useFormColaborador();
     const isMobile = useResponsive('down', 'sm')
 
     const MyGrid = styled(Grid)(() => ({
@@ -75,6 +77,7 @@ const NovoColaborador = ({ setNovo }: NovoColaboradorProps) => {
                     helperText={errors?.regimeContratacao?.message}
                     fullWidth
                 >
+                    
                     {regimeContratacao.map((option) => (
                         <MenuItem key={option} value={option}>
                             {option}
@@ -84,24 +87,26 @@ const NovoColaborador = ({ setNovo }: NovoColaboradorProps) => {
                 </TextField>
             </MyGrid>
 
-            {/* <S.InputSelect
+            <MyGrid item xs={6}>
+                <Select
                     {...register('areas', {
-                        required: true,
+                        required: false,
                     })}
                     name="areas"
-                    labelId="demo-multiple-name-label"
-                    id="demo-multiple-name"
                     multiple
+                    fullWidth
                     value={getValues('areas')}
-                    label="Áreas de Atuação"
+                    label="Tecnologias"
                     error={Boolean(errors?.areas)}
                 >
-                    {areas.map((option) => (
-                        <MenuItem key={option} value={option}>
-                            {option}
-                        </MenuItem>
-                    ))}
-                </S.InputSelect> */}
+                    <MenuItem value={'a'}>
+                        a
+                    </MenuItem>
+                    <MenuItem value={'b'}>
+                        b
+                    </MenuItem>
+                </Select>
+            </MyGrid>
             <Grid container sx={{my: 8, mx: 2}}>
                 <Grid item xs={6}>
                     <LoadingButton

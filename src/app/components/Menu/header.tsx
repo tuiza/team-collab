@@ -42,6 +42,7 @@ export default function Menu({ onOpenNav }: MenuProps) {
                     width: `calc(100% - ${NAV.WIDTH + 1}px)`,
                     height: HEADER.H_DESKTOP,
                 }),
+                backgroundColor: theme.palette.background.default,
             }}
         >
             <Toolbar

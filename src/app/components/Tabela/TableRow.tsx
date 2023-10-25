@@ -5,7 +5,8 @@ import TableRow from '@mui/material/TableRow';
 import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
 import { useAppContext } from '@/contexts/appContext';
-import { Button, Typography } from '@mui/material';
+import { Typography, IconButton } from '@mui/material';
+import { FiMoreVertical, FiEdit, FiTrash2 } from "react-icons/fi";
 
 type UserTableRowProps = {
   row: { [key: string]: any }
@@ -36,7 +37,7 @@ export default function UserTableRow({ row, setOpenEdit }: UserTableRowProps) {
     <>
       <TableRow hover tabIndex={-1} role="checkbox">
         {
-          Object.keys(row).filter((r)=> r !== 'id').map((key) => {
+          Object.keys(row).filter((r) => r !== 'id').map((key) => {
             if (key !== 'nome') {
               return <TableCell key={key} >{row[key]}</TableCell>
             } else {
@@ -51,9 +52,9 @@ export default function UserTableRow({ row, setOpenEdit }: UserTableRowProps) {
         }
 
         <TableCell align="right">
-          <Button variant="contained" color="inherit" onClick={handleOpenMenu}>
-            *
-          </Button>
+          <IconButton onClick={handleOpenMenu}>
+            <FiMoreVertical />
+          </IconButton>
         </TableCell>
       </TableRow>
 
@@ -63,16 +64,15 @@ export default function UserTableRow({ row, setOpenEdit }: UserTableRowProps) {
         onClose={handleCloseMenu}
         anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        slotProps={{ paper: { sx: { width: 100 } } }}
+        slotProps={{ paper: { sx: { width: 120 } } }}
       >
-        <MenuItem onClick={handleEdit}>
-          +
-          Edit
+        <MenuItem onClick={handleEdit} >
+          <FiEdit />
+          <Typography sx={{ ml: 1 }}>Editar</Typography>
         </MenuItem>
-
         <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
-          X
-          Delete
+          <FiTrash2 />
+          <Typography sx={{ ml: 1 }}> Apagar</Typography>
         </MenuItem>
       </Popover>
     </>

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Container from "@mui/material/Container";
 
-import NovoColaborador from "./novoProjetos";
+import NovoProjeto from "./novoProjeto";
 import Table from "@/app/components/Tabela";
 import { Stack, Typography, Button } from "@mui/material";
 import { useAppContext } from "@/contexts/appContext";
@@ -12,10 +12,9 @@ export default function UserPage() {
   const [openNew, setOpenNew] = useState(false);
 
   return (
-    <>
       <Container>
         {openNew ?
-          <NovoColaborador setNovo={setOpenNew} /> :
+          <NovoProjeto setNovo={setOpenNew} /> :
           (
             <>
               <Stack
@@ -47,6 +46,5 @@ export default function UserPage() {
           )
         }
       </Container>
-    </>
   );
 }

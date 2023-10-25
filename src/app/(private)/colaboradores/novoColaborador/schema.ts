@@ -12,7 +12,7 @@ const schemaLogin = z.object({
           })
           .join(" ");
       }),
-    areas: z.array(z.string().min(1, "Selecione uma área")),
+    areas: z.array(z.string().min(1, "Selecione uma opção")),
     idade: z.number().min(15, "Idade inválida"),
     regimeContratacao: z.string().min(1, "Selecione uma opção"),
     email: z.string().email("Email inválido"),

@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useAppContext } from "@/contexts/appContext";
 import { Colaborador } from "@/types/Colaborador";
@@ -20,11 +19,12 @@ export default function useFormColaborador() {
     defaultValues: {
       email: "",
       nome: "",
-      areas: [""],
+      areas: [],
       idade: 0,
       regimeContratacao: "",
     },
   });
+  console.log(errors);
 
   const handleFormSubimit = async (data: any) => {
     adicionarColaborador({

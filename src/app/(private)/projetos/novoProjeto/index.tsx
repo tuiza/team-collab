@@ -5,8 +5,10 @@ import {
     Grid,
     TextField,
     styled,
-    Box
-
+    Box,
+    Select,
+    InputLabel,
+    OutlinedInput
 } from '@mui/material';
 
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -14,12 +16,15 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import useFormColaborador from './useFormColaborador';
 import { regimeContratacao } from "@/public/mocks/regimeDeContratacao";
 import { useResponsive } from '@/hooks/useResponsive';
+import { areas } from '@/public/mocks/areas';
+import { colaboradores } from '@/public/mocks/colaboradores';
+import { projetos } from '@/public/mocks/projetos';
 
-type NovoColaboradorProps = {
+type NovoProjetoProps = {
     setNovo: (novo: boolean) => void;
 }
-const NovoColaborador = ({ setNovo }: NovoColaboradorProps) => {
-    const { handleSubmit, handleFormSubimit, errors, register } = useFormColaborador();
+const NovoProjeto = ({ setNovo }: NovoProjetoProps) => {
+    const { handleSubmit, handleFormSubimit, errors, register, getValues } = useFormColaborador();
     const isMobile = useResponsive('down', 'sm')
 
     const MyGrid = styled(Grid)(() => ({
@@ -31,10 +36,9 @@ const NovoColaborador = ({ setNovo }: NovoColaboradorProps) => {
         <Grid onSubmit={handleSubmit(handleFormSubimit)} container spacing={2}>
             <Grid item xs={12}>
                 <Typography variant="h6">
-                    Dados Pessoais
+                    Informações do Projeto
                 </Typography>
             </Grid>
-            {}
             <MyGrid item >
                 <TextField
                     {...register('nome', { required: true })}
@@ -83,25 +87,48 @@ const NovoColaborador = ({ setNovo }: NovoColaboradorProps) => {
 
                 </TextField>
             </MyGrid>
-
-            {/* <S.InputSelect
+            <MyGrid item xs={6}>
+                <InputLabel id="demo-multiple-name-label">Colaboradores</InputLabel>
+            <Select
                     {...register('areas', {
                         required: true,
                     })}
                     name="areas"
+                    multiple
                     labelId="demo-multiple-name-label"
                     id="demo-multiple-name"
-                    multiple
+                    input={<OutlinedInput label="Name" />}
+                    fullWidth
                     value={getValues('areas')}
-                    label="Áreas de Atuação"
+                    label="Colaboradores"
                     error={Boolean(errors?.areas)}
                 >
-                    {areas.map((option) => (
+                    {colaboradores.map((c)=> c.nome).map((option) => (
                         <MenuItem key={option} value={option}>
                             {option}
                         </MenuItem>
                     ))}
-                </S.InputSelect> */}
+                </Select>
+                </MyGrid>
+            <MyGrid item xs={6}>
+            <Select
+                    {...register('areas', {
+                        required: true,
+                    })}
+                    name="areas"
+                    multiple
+                    fullWidth
+                    value={getValues('areas')}
+                    label="Tecnologias"
+                    error={Boolean(errors?.areas)}
+                >
+                    {projetos.map((c)=> c.tecnologias).map((option) => (
+                        <MenuItem key={option} value={option}>
+                            {option}
+                        </MenuItem>
+                    ))}
+                </Select>
+                </MyGrid>
             <Grid container sx={{my: 8, mx: 2}}>
                 <Grid item xs={6}>
                     <LoadingButton
@@ -122,9 +149,8 @@ const NovoColaborador = ({ setNovo }: NovoColaboradorProps) => {
                         type='submit'
                         variant="contained"
                         color="inherit"
-                        onClick={() => setNovo(true)}
                     >
-                        Criar Colaborador
+                        Criar Projeto
                     </LoadingButton>
                 </Grid>
             </Grid>
@@ -133,11 +159,11 @@ const NovoColaborador = ({ setNovo }: NovoColaboradorProps) => {
     return (
         <Box>
             <Typography variant="h4" sx={{ mt: 2, mb: 5 }}>
-                Criar novo Colaborador
+                Criar novo Projeto
             </Typography>
             {renderForm}
         </Box>
     )
 }
 
-export default NovoColaborador
+export default NovoProjeto

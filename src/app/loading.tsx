@@ -1,5 +1,5 @@
 export default function Loading() {
     return (
-        <h1>Carregando...</h1>
+        <h1 style={{alignSelf:'center', justifySelf:'center'}}>Carregando...</h1>
     )
 }

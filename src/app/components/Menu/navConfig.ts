@@ -1,19 +1,19 @@
 const navConfig = [
   {
     title: "dashboard",
-    path: "/(private)/dashboard",
+    path: "/",
   },
   {
     title: "colaboradores",
-    path: "/(private)/colaboradores",
+    path: "/colaboradores",
   },
   {
     title: "projetos",
-    path: "/(private)/projetos",
+    path: "/projetos",
   },
   {
     title: "login",
-    path: "/(public)/login",
+    path: "/login",
   },
 ];
 

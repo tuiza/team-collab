@@ -4,6 +4,7 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
+import { FiSearch } from "react-icons/fi";
 
 type UserTableToolbarProps = {
   filterName: string;
@@ -25,6 +26,7 @@ export default function UserTableToolbar({filterName, onFilterName }: UserTableT
           placeholder="Pesquisar pelo nome"
           startAdornment={
             <InputAdornment position="start">
+              <FiSearch/>
               {/* <Iconify
                 icon="eva:search-fill"
                 sx={{ color: 'text.disabled', width: 20, height: 20 }}

@@ -34,14 +34,14 @@ const Table = ({ data, setOpenEdit, labels }: TableProps) => {
         filterName
     } = useTable(data)
     return (
-        <>
             <Card>
                 <UserTableToolbar
                     filterName={filterName}
                     onFilterName={handleFilterByName}
                 />
+                
                 <Scrollbar>
-                <TableContainer sx={{ overflow: "unset" }}>
+            <TableContainer sx={{ overflow: "unset" }}>
                     <ComponentTable sx={{ minWidth: 800 }}>
                         <UserTableHead
                             order={order}
@@ -69,10 +69,13 @@ const Table = ({ data, setOpenEdit, labels }: TableProps) => {
 
                             {notFound && <TableNoData query={filterName} />}
                         </TableBody>
-                    </ComponentTable>
-                    </TableContainer>
-                </Scrollbar>
 
+                    </ComponentTable>
+                    
+            </TableContainer>
+                    </Scrollbar>
+            
+                
                 <TablePagination
                     page={page}
                     component="div"
@@ -83,7 +86,6 @@ const Table = ({ data, setOpenEdit, labels }: TableProps) => {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Card>
-        </>
     )
 }
 

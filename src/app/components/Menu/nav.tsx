@@ -1,14 +1,17 @@
 'use client'
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import Drawer from '@mui/material/Drawer';
+import {
+    Avatar,
+    Box,
+    Drawer,
+    Typography,
+    ListItemButton,
+    Stack,
+} from '@mui/material';
+
 import { alpha } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import ListItemButton from '@mui/material/ListItemButton';
 import { useResponsive } from '@/hooks/useResponsive';
-
 
 import navConfig from './navConfig';
 import { NAV } from './configMenu';
@@ -26,12 +29,15 @@ export default function Nav({ openNav, onCloseNav }: NavProps) {
 
     const upLg = useResponsive('up', 'lg');
 
-    useEffect(() => {
+    const openMenu = useCallback(() => {
         if (openNav) {
             onCloseNav();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pathname]);
+    }, [openNav, onCloseNav]);
+
+    useEffect(() => {
+        openMenu();
+    }, [pathname, openMenu]);
 
     const renderAccount = (
         <Box
@@ -46,7 +52,7 @@ export default function Nav({ openNav, onCloseNav }: NavProps) {
                 bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
             }}
         >
-            {/* <Avatar src={account.photoURL} alt="photoURL" /> */}
+             <Avatar src={account.photoURL} alt="photoURL" />
 
             <Box sx={{ ml: 2 }}>
                 <Typography variant="subtitle2">{account.displayName}</Typography>
@@ -116,7 +122,7 @@ type NavItemProps = {
     };
 };
 
-function NavItem({ item } : NavItemProps) {
+function NavItem({ item }: NavItemProps) {
     const pathname = usePathname();
 
     const active = item.path === pathname;
