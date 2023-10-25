@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Menu from './components/Menu'
-import StyledComponentsRegistry from './lib/registry'
 import { AuthProvider } from '../../providers/auth-providers'
 import ThemeRegistry from '@/theme/ThemeRegistry/ThemeRegistry'
 
@@ -22,11 +21,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <AuthProvider>
           <ThemeRegistry>
-            <StyledComponentsRegistry>
               <Menu>
                 {children}
               </Menu>
-            </StyledComponentsRegistry>
           </ThemeRegistry>
         </AuthProvider>
       </body>
