@@ -10,8 +10,3 @@ export const areas = [
     "Front End Developer",
     "Full Stack Developer",
 ];
-
-export const areasLabelValue = areas.map((area, i) => ({
-    label: area,
-    value: i,
-}));

@@ -11,7 +11,6 @@ export default function UserPage() {
   const { colaboradores } = useAppContext();
   const [openNew, setOpenNew] = useState(false);
 
-
   return (
     <>
       <Container>
