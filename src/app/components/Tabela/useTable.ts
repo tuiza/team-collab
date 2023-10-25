@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import { applyFilter, getComparator } from "@/utils/utils";
+import { applyFilter, getComparator } from "@/utils/tableUtils";
 
 export default function useTable(data: { [key: string]: any }[]) {
   const [page, setPage] = useState<number>(0);

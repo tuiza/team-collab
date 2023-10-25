@@ -8,7 +8,7 @@ import useTable from "./useTable";
 import UserTableToolbar from "./Toolbar";
 import UserTableHead from "./TableHead";
 import UserTableRow from "./TableRow";
-import { emptyRows } from "@/utils/utils";
+import { emptyRows } from "@/utils/tableUtils";
 import TableNoData from "./NoData";
 import TableEmptyRows from "./EmptyRows";
 
