@@ -11,6 +11,7 @@ import UserTableRow from "./TableRow";
 import { emptyRows } from "@/utils/tableUtils";
 import TableNoData from "./NoData";
 import TableEmptyRows from "./EmptyRows";
+import Scrollbar from "../Scrollbar";
 
 type TableProps = {
     data: { [key: string]: any }[]
@@ -39,6 +40,7 @@ const Table = ({ data, setOpenEdit, labels }: TableProps) => {
                     filterName={filterName}
                     onFilterName={handleFilterByName}
                 />
+                <Scrollbar>
                 <TableContainer sx={{ overflow: "unset" }}>
                     <ComponentTable sx={{ minWidth: 800 }}>
                         <UserTableHead
@@ -68,7 +70,8 @@ const Table = ({ data, setOpenEdit, labels }: TableProps) => {
                             {notFound && <TableNoData query={filterName} />}
                         </TableBody>
                     </ComponentTable>
-                </TableContainer>
+                    </TableContainer>
+                </Scrollbar>
 
                 <TablePagination
                     page={page}
