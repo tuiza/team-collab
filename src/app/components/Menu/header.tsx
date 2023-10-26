@@ -4,6 +4,7 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import { useTheme } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
+import { FiAlignJustify } from "react-icons/fi";
 
 import { HEADER, NAV } from './configMenu';
 import { useResponsive } from '@/hooks/useResponsive';
@@ -21,10 +22,9 @@ export default function Menu({ onOpenNav }: MenuProps) {
         <>
             {!lgUp && (
                 <IconButton onClick={onOpenNav} sx={{ mr: 1 }}>
-                    --
+                    <FiAlignJustify/>
                 </IconButton>
             )}
-
             <Box sx={{ flexGrow: 1 }} />
         </>
     );

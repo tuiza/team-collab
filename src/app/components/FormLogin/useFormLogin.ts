@@ -42,7 +42,9 @@ export default function useLogin() {
                 router.refresh();
                 router.push('/private/colaboradores')
             }
-            setErrorAuth("Email ou senha inválidos");
+            else {
+                setErrorAuth("Email ou senha inválidos");
+            }
         }
         catch (error) {
             setErrorAuth('Email ou senha inválidos')

@@ -12,19 +12,15 @@ import {
     useTheme
 } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { FiEyeOff, FiEye } from "react-icons/fi";
 
 import useFormLogin from "./useFormLogin";
+import { signOut } from 'next-auth/react'
+
 
 const FormLogin = () => {
     const [showPassword, setShowPassword] = useState(false);
     const { handleSubmit, handleFormSubimit, errors, register, errorAuth, loading } = useFormLogin();
-    const [dark, setDark] = useState(false);
-    const theme = useTheme();
-
-    const handleDarkMode = () => {
-        theme.palette.mode = dark ? 'light' : 'dark';
-        setDark((prev) => !prev);
-    }
 
     const renderForm = (
         <form onSubmit={handleSubmit(handleFormSubimit)}>
@@ -48,7 +44,7 @@ const FormLogin = () => {
                         endAdornment: (
                             <InputAdornment position="end">
                                 <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                                    {/* <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} /> */}
+                                    {showPassword ? <FiEye /> : <FiEyeOff />}
                                 </IconButton>
                             </InputAdornment>
                         ),
@@ -67,10 +63,10 @@ const FormLogin = () => {
                 Entrar
             </LoadingButton>
             <LoadingButton
-                onClick={handleDarkMode}
+                onClick={() => signOut()}
                 loading={loading}
             >
-                dark
+                Sair
             </LoadingButton>
         </form>
     );
