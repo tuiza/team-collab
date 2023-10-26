@@ -1,15 +1,13 @@
 'use client'
 import { Colaborador } from "@/types/Colaborador";
-import { createContext, useState, useContext} from "react";
+import { createContext, useState, useContext, useMemo } from "react";
 import { colaboradores as mockColaboradores } from "@/public/mocks/colaboradores";
 import { projetos as mockProjetos } from "@/public/mocks/projetos";
 import { Projeto } from "@/types/Projeto";
 
-
 type ContextProviderProps = {
   children: React.ReactNode;
 };
-
 interface AppContextProps {
   colaboradores: Colaborador[];
   projetos: Projeto[];
@@ -17,6 +15,7 @@ interface AppContextProps {
   removerColaborador: (id: string) => void;
   adicionarProjeto: (projeto: Projeto) => void;
   removerProjeto: (id: string) => void;
+  editarColaborador: (id: string, data: Colaborador) => void;
 }
 
 export const AppContext = createContext<AppContextProps>({} as AppContextProps);
@@ -24,7 +23,7 @@ export const AppContext = createContext<AppContextProps>({} as AppContextProps);
 export const useAppContext = (): AppContextProps => {
   const context = useContext(AppContext);
   if (!context) {
-    throw new Error("useAppContext must be used within an AppProvider");
+    throw new Error("useAppContext só pode ser usado dentro de um AppProvider");
   }
   return context;
 };
@@ -33,12 +32,25 @@ const AppProvider = ({ children }: ContextProviderProps) => {
   const [colaboradores, setColaboradores] = useState<Colaborador[]>(mockColaboradores);
   const [projetos, setProjetos] = useState<Projeto[]>(mockProjetos);
 
+  const getColaborador = (id: string) => {
+    return colaboradores.find((colaborador) => colaborador.id === id);
+  }
+
   const adicionarColaborador = (colaborador: Colaborador) => {
-    setColaboradores((prevColaboradores) => [
+  setColaboradores((prevColaboradores) => [
       ...prevColaboradores,
       colaborador,
     ]);
   };
+
+  const editarColaborador = (id: string, data: Colaborador) => {
+    const colaboradoress = colaboradores
+    const colaborador = getColaborador(id);
+    const index = colaboradoress.findIndex(colaborador => colaborador.id === id)
+    const colaboradorModificado = { ...colaboradoress[index], ...data }
+    colaboradoress[index] = colaboradorModificado
+    setColaboradores(colaboradoress)
+  }
 
   const removerColaborador = (id: string) => {
     setColaboradores((prevColaboradores) =>
@@ -57,21 +69,23 @@ const AppProvider = ({ children }: ContextProviderProps) => {
   };
 
 
-  const value = {
+
+  const value = useMemo(() => ({
     colaboradores,
     projetos,
     adicionarColaborador,
     removerColaborador,
     adicionarProjeto,
     removerProjeto,
-  }
+    editarColaborador,
+  }), [colaboradores, projetos]);
 
   return (
-    <AppContext.Provider
-      value={value} >
+    <AppContext.Provider value={value}>
       {children}
     </AppContext.Provider>
-  )
+  );
+
 }
 
 export default AppProvider;

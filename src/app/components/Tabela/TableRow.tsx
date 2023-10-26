@@ -1,19 +1,24 @@
 'use client'
 import { useState } from 'react';
-import Popover from '@mui/material/Popover';
-import TableRow from '@mui/material/TableRow';
-import MenuItem from '@mui/material/MenuItem';
-import TableCell from '@mui/material/TableCell';
-import { useAppContext } from '@/contexts/appContext';
-import { Typography, IconButton } from '@mui/material';
-import { FiMoreVertical, FiEdit, FiTrash2 } from "react-icons/fi";
 
-type UserTableRowProps = {
-  row: { [key: string]: any }
-  setOpenEdit: (open: boolean) => void
+import {
+  Popover,
+  MenuItem,
+  Typography,
+  TableCell,
+  TableRow as TableRowComponent,
+  IconButton
+} from '@mui/material';
+import { useAppContext } from '@/contexts/appContext';
+import { FiMoreVertical, FiEdit, FiTrash2 } from "react-icons/fi";
+import { Row } from '@/types/Row';
+
+type TableRowProps = {
+  row: Row
+  handleEdit: (row: Row) => void
 }
 
-export default function UserTableRow({ row, setOpenEdit }: UserTableRowProps) {
+export default function TableRow({ row, handleEdit }: TableRowProps) {
   const [open, setOpen] = useState<HTMLElement | null>(null);
   const { removerColaborador } = useAppContext()
 
@@ -25,9 +30,6 @@ export default function UserTableRow({ row, setOpenEdit }: UserTableRowProps) {
     removerColaborador(row.id)
   }
 
-  function handleEdit() {
-    setOpenEdit(true)
-  }
 
   const handleCloseMenu = () => {
     setOpen(null);
@@ -35,7 +37,7 @@ export default function UserTableRow({ row, setOpenEdit }: UserTableRowProps) {
 
   return (
     <>
-      <TableRow hover tabIndex={-1} role="checkbox">
+      <TableRowComponent hover tabIndex={-1} role="checkbox">
         {
           Object.keys(row).filter((r) => r !== 'id').map((key) => {
             if (key !== 'nome') {
@@ -56,7 +58,7 @@ export default function UserTableRow({ row, setOpenEdit }: UserTableRowProps) {
             <FiMoreVertical />
           </IconButton>
         </TableCell>
-      </TableRow>
+      </TableRowComponent>
 
       <Popover
         open={!!open}
@@ -66,7 +68,7 @@ export default function UserTableRow({ row, setOpenEdit }: UserTableRowProps) {
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         slotProps={{ paper: { sx: { width: 120 } } }}
       >
-        <MenuItem onClick={handleEdit} >
+        <MenuItem onClick={()=> handleEdit(row)} >
           <FiEdit />
           <Typography sx={{ ml: 1 }}>Editar</Typography>
         </MenuItem>

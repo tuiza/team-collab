@@ -5,21 +5,23 @@ import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
 import useTable from "./useTable";
-import UserTableToolbar from "./Toolbar";
-import UserTableHead from "./TableHead";
-import UserTableRow from "./TableRow";
+import TableToolbar from "./Toolbar";
+import TableHead from "./TableHead";
+import TableRow from "./TableRow";
 import { emptyRows } from "@/utils/tableUtils";
 import TableNoData from "./NoData";
 import TableEmptyRows from "./EmptyRows";
 import Scrollbar from "../Scrollbar";
+import { Row } from "@/types/Row";
 
 type TableProps = {
     data: { [key: string]: any }[]
     setOpenEdit: (open: boolean) => void
     labels: { id: string, label: string }[]
+    handleEdit: (row: Row) => void
 }
 
-const Table = ({ data, setOpenEdit, labels }: TableProps) => {
+const Table = ({ data, setOpenEdit, labels, handleEdit }: TableProps) => {
     const {
         handleChangePage,
         handleChangeRowsPerPage,
@@ -34,16 +36,16 @@ const Table = ({ data, setOpenEdit, labels }: TableProps) => {
         filterName
     } = useTable(data)
     return (
-            <Card>
-                <UserTableToolbar
-                    filterName={filterName}
-                    onFilterName={handleFilterByName}
-                />
-                
-                <Scrollbar>
-            <TableContainer sx={{ overflow: "unset" }}>
+        <Card>
+            <TableToolbar
+                filterName={filterName}
+                onFilterName={handleFilterByName}
+            />
+
+            <Scrollbar sx={{ overflow: "unset" }}>
+                <TableContainer >
                     <ComponentTable sx={{ minWidth: 800 }}>
-                        <UserTableHead
+                        <TableHead
                             order={order}
                             orderBy={orderBy}
                             onRequestSort={handleSort}
@@ -55,10 +57,10 @@ const Table = ({ data, setOpenEdit, labels }: TableProps) => {
                             {dataFiltered
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row) => (
-                                    <UserTableRow
+                                    <TableRow
                                         key={row.id}
                                         row={row}
-                                        setOpenEdit={setOpenEdit}
+                                        handleEdit={handleEdit}
                                     />
                                 ))}
 
@@ -69,23 +71,20 @@ const Table = ({ data, setOpenEdit, labels }: TableProps) => {
 
                             {notFound && <TableNoData query={filterName} />}
                         </TableBody>
-
                     </ComponentTable>
-                    
-            </TableContainer>
-                    </Scrollbar>
-            
-                
-                <TablePagination
-                    page={page}
-                    component="div"
-                    count={data.length}
-                    rowsPerPage={rowsPerPage}
-                    onPageChange={handleChangePage}
-                    rowsPerPageOptions={[5, 10, 25]}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-            </Card>
+                </TableContainer>
+
+            </Scrollbar>
+            <TablePagination
+                page={page}
+                component="div"
+                count={data.length}
+                rowsPerPage={rowsPerPage}
+                onPageChange={handleChangePage}
+                rowsPerPageOptions={[5, 10, 25]}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+        </Card>
     )
 }
 

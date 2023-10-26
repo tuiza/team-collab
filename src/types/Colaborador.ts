@@ -4,6 +4,5 @@ export type Colaborador = {
     areas: string[];
     idade: number;
     regimeContratacao: string;
-    projetos: string[];
     email: string;
 };

@@ -1,10 +1,12 @@
-import Box from '@mui/material/Box';
-import TableRow from '@mui/material/TableRow';
-import TableHead from '@mui/material/TableHead';
-import TableCell, { TableCellProps } from '@mui/material/TableCell';
-import TableSortLabel from '@mui/material/TableSortLabel';
+import {
+  Box,
+  TableRow,
+  TableSortLabel,
+  TableHead as TableHeadComponent,
+  TableCell
+} from '@mui/material'
+import  { TableCellProps } from '@mui/material/TableCell';
 import { visuallyHidden } from '@/utils/tableUtils';
-
 export interface HeadCell {
   id: string;
   align?: TableCellProps['align'];
@@ -21,7 +23,7 @@ interface ColaboradoresTableHeadProps {
   openEdit: (open: boolean) => void
 }
 
-export default function UserTableHead({
+export default function TableHead({
   order,
   orderBy,
   headLabel,
@@ -33,7 +35,7 @@ export default function UserTableHead({
   };
 
   return (
-    <TableHead>
+    <TableHeadComponent>
       <TableRow>
         {headLabel.map((headCell) => (
           <TableCell
@@ -58,6 +60,6 @@ export default function UserTableHead({
           </TableCell>
         ))}
       </TableRow>
-    </TableHead>
+    </TableHeadComponent>
   );
 }
