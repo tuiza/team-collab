@@ -9,7 +9,7 @@ import { useAppContext } from "@/contexts/appContext";
 import { tableHead } from "./tableHead";
 import { Row } from "@/types/Row";
 
-export default function UserPage() {
+export default function Colaboradores() {
   const { colaboradores } = useAppContext();
   const [openNew, setOpenNew] = useState(false);
   const [rowData, setRowData] = useState<Row>([]);

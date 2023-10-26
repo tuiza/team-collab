@@ -16,6 +16,7 @@ interface AppContextProps {
   adicionarProjeto: (projeto: Projeto) => void;
   removerProjeto: (id: string) => void;
   editarColaborador: (id: string, data: Colaborador) => void;
+  editarProjeto: (id: string, data: Projeto) => void;
 }
 
 export const AppContext = createContext<AppContextProps>({} as AppContextProps);
@@ -44,12 +45,19 @@ const AppProvider = ({ children }: ContextProviderProps) => {
   };
 
   const editarColaborador = (id: string, data: Colaborador) => {
-    const colaboradoress = colaboradores
-    const colaborador = getColaborador(id);
-    const index = colaboradoress.findIndex(colaborador => colaborador.id === id)
-    const colaboradorModificado = { ...colaboradoress[index], ...data }
-    colaboradoress[index] = colaboradorModificado
-    setColaboradores(colaboradoress)
+    const colaboradoresAtuais = colaboradores
+    const index = colaboradoresAtuais.findIndex(colaborador => colaborador.id === id)
+    const colaboradorModificado = { ...colaboradoresAtuais[index], ...data }
+    colaboradoresAtuais[index] = colaboradorModificado
+    setColaboradores(colaboradoresAtuais)
+  }
+
+  const editarProjeto = (id: string, data: Projeto) => {
+    const colaboradoresAtuais = colaboradores
+    const index = colaboradoresAtuais.findIndex(colaborador => colaborador.id === id)
+    const colaboradorModificado = { ...colaboradoresAtuais[index], ...data }
+    colaboradoresAtuais[index] = colaboradorModificado
+    setColaboradores(colaboradoresAtuais)
   }
 
   const removerColaborador = (id: string) => {
@@ -78,6 +86,7 @@ const AppProvider = ({ children }: ContextProviderProps) => {
     adicionarProjeto,
     removerProjeto,
     editarColaborador,
+    editarProjeto,
   }), [colaboradores, projetos]);
 
   return (

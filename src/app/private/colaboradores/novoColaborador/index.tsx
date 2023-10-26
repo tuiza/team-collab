@@ -6,8 +6,6 @@ import {
     TextField,
     styled,
     Box,
-    AutocompleteRenderInputParams,
-    Autocomplete
 } from '@mui/material';
 
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -88,8 +86,6 @@ const NovoColaborador = ({ setNovo, rowData }: NovoColaboradorProps) => {
                         {...register('regimeContratacao', { required: true })}
                         name="regimeContratacao"
                         select
-                        
-                        value={getValues('regimeContratacao')}
                         label="Regime de Contratação"
                         error={Boolean(errors?.regimeContratacao)}
                         helperText={errors?.regimeContratacao?.message}
@@ -128,7 +124,6 @@ const NovoColaborador = ({ setNovo, rowData }: NovoColaboradorProps) => {
                         <LoadingButton
                             loading={false}
                             size="large"
-                            type='submit'
                             variant="contained"
                             color="inherit"
                             onClick={() => setNovo(false)}
@@ -142,7 +137,7 @@ const NovoColaborador = ({ setNovo, rowData }: NovoColaboradorProps) => {
                             type='submit'
                             variant="contained"
                             color="inherit"
-                            onClick={() => setNovo(true)}
+                            
                         >
                             {rowData ? 'Salvar Edição' : 'Criar Colaborador'}
                         </LoadingButton>

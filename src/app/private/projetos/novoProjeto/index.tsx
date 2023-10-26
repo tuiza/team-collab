@@ -6,34 +6,40 @@ import {
     TextField,
     styled,
     Box,
-    Select,
-    InputLabel,
-    OutlinedInput
 } from '@mui/material';
 
 import LoadingButton from '@mui/lab/LoadingButton';
 
-import useFormColaborador from './useFormColaborador';
+import useFormColaborador from './useFormProjeto';
 import { regimeContratacao } from "@/public/mocks/regimeDeContratacao";
 import { useResponsive } from '@/hooks/useResponsive';
-import { areas } from '@/public/mocks/areas';
-import { colaboradores } from '@/public/mocks/colaboradores';
-import { projetos } from '@/public/mocks/projetos';
+import { Row } from '@/types/Row';
+import { useAppContext } from '@/contexts/appContext';
 
 type NovoProjetoProps = {
     setNovo: (novo: boolean) => void;
+    setEdit?: (edit: boolean) => void;
+    rowData?: Row
 }
-const NovoProjeto = ({ setNovo }: NovoProjetoProps) => {
-    const { handleSubmit, handleFormSubimit, errors, register, getValues } = useFormColaborador();
+const NovoProjeto = ({ setNovo, rowData }: NovoProjetoProps) => {
+    const { handleSubmit, handleFormSubimit, errors, register } = useFormColaborador(rowData);
     const isMobile = useResponsive('down', 'sm')
+    const { colaboradores } = useAppContext()
+    
+    const nomeColaboradores = colaboradores.map(colaborador => colaborador.nome)
 
     const MyGrid = styled(Grid)(() => ({
         width: isMobile ? '100%' : '50%',
     }));
 
+    const handleConfirm = (data: Row) => {
+        handleFormSubimit(data, rowData?.id)
+        setNovo(false)
+    }
 
     const renderForm = (
-        <Grid onSubmit={handleSubmit(handleFormSubimit)} container spacing={2}>
+        <form onSubmit={handleSubmit(handleConfirm)}>
+        <Grid  container spacing={2}>
             <Grid item xs={12}>
                 <Typography variant="h6">
                     Informações do Projeto
@@ -49,34 +55,14 @@ const NovoProjeto = ({ setNovo }: NovoProjetoProps) => {
                     fullWidth
                 />
             </MyGrid>
-            <MyGrid item >
-                <TextField
-                    {...register('email', { required: true })}
-                    name="email"
-                    label="Email"
-                    error={Boolean(errors?.email)}
-                    helperText={errors?.email?.message}
-                    fullWidth
-                />
-            </MyGrid>
-            <MyGrid item>
-                <TextField
-                    {...register('idade', { required: true, setValueAs: (value: string) => parseInt(value, 10) })}
-                    name="idade"
-                    type="number"
-                    label="Idade"
-                    error={Boolean(errors?.idade)}
-                    helperText={errors?.idade?.message}
-                />
-            </MyGrid>
             <MyGrid item xs={6}>
                 <TextField
-                    {...register('regimeContratacao', { required: true })}
-                    name="regimeContratacao"
+                    {...register('tecnologias', { required: true })}
+                    name="tecnologias"
                     select
-                    label="Regime de Contratação"
-                    error={Boolean(errors?.regimeContratacao)}
-                    helperText={errors?.regimeContratacao?.message}
+                    label="Tecnologias"
+                    error={Boolean(errors?.tecnologias)}
+                    helperText={errors?.tecnologias?.message}
                     fullWidth
                 >
                     {regimeContratacao.map((option) => (
@@ -88,53 +74,39 @@ const NovoProjeto = ({ setNovo }: NovoProjetoProps) => {
                 </TextField>
             </MyGrid>
             <MyGrid item xs={6}>
-                <InputLabel id="demo-multiple-name-label">Colaboradores</InputLabel>
-            <Select
-                    {...register('areas', {
-                        required: true,
-                    })}
-                    name="areas"
-                    multiple
-                    labelId="demo-multiple-name-label"
-                    id="demo-multiple-name"
-                    input={<OutlinedInput label="Name" />}
-                    fullWidth
-                    value={getValues('areas')}
+                <TextField
+                    {...register('colaboradores', { required: true })}
+                    name="colaboradores"
+                    select
                     label="Colaboradores"
-                    error={Boolean(errors?.areas)}
-                >
-                    {colaboradores.map((c)=> c.nome).map((option) => (
-                        <MenuItem key={option} value={option}>
-                            {option}
-                        </MenuItem>
-                    ))}
-                </Select>
-                </MyGrid>
-            <MyGrid item xs={6}>
-            <Select
-                    {...register('areas', {
-                        required: true,
-                    })}
-                    name="areas"
-                    multiple
+                    error={Boolean(errors?.colaboradores)}
+                    helperText={errors?.colaboradores?.message}
                     fullWidth
-                    value={getValues('areas')}
-                    label="Tecnologias"
-                    error={Boolean(errors?.areas)}
                 >
-                    {projetos.map((c)=> c.tecnologias).map((option) => (
+                    {nomeColaboradores.map((option) => (
                         <MenuItem key={option} value={option}>
                             {option}
                         </MenuItem>
                     ))}
-                </Select>
-                </MyGrid>
-            <Grid container sx={{my: 8, mx: 2}}>
+
+                </TextField>
+            </MyGrid>
+            <MyGrid item >
+                <TextField
+                    {...register('descricao', { required: true })}
+                    name="descricao"
+                    label="Descrição"
+                    multiline
+                    error={Boolean(errors?.descricao)}
+                    helperText={errors?.descricao?.message}
+                    fullWidth
+                />
+            </MyGrid>
+            <Grid container sx={{my: 8, mx: 2}} >
                 <Grid item xs={6}>
                     <LoadingButton
                         loading={false}
                         size="large"
-                        type='submit'
                         variant="contained"
                         color="inherit"
                         onClick={() => setNovo(false)}
@@ -154,12 +126,13 @@ const NovoProjeto = ({ setNovo }: NovoProjetoProps) => {
                     </LoadingButton>
                 </Grid>
             </Grid>
-        </Grid>
+            </Grid>
+        </form>
     );
     return (
         <Box>
             <Typography variant="h4" sx={{ mt: 2, mb: 5 }}>
-                Criar novo Projeto
+                {rowData ? 'Editar Projeto' : 'Novo Projeto'}
             </Typography>
             {renderForm}
         </Box>
