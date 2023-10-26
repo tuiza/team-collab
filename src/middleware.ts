@@ -2,7 +2,7 @@ import { withAuth, NextRequestWithAuth, NextAuthMiddlewareOptions } from "next-a
 import { NextResponse } from "next/server";
 const middleware = (req: NextRequestWithAuth) => {
    const isPrivateRoutes = req.nextUrl.pathname.startsWith("/private");
-  const isAdminUser = req.nextauth.token?.role === "admin"; // colocar dentro de um contexto
+  const isAdminUser = req.nextauth.token?.role === "admin";
 
    if (isPrivateRoutes && !isAdminUser) {
      return NextResponse.rewrite(new URL("/denied", req.url));
@@ -14,5 +14,5 @@ const callbackOptions: NextAuthMiddlewareOptions= {};
 export default withAuth(middleware, callbackOptions);
 
 export const config = {
-  matcher: "/(private)/:path*",
+  matcher: "/private/:path*",
 };

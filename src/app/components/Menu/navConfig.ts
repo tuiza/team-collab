@@ -5,11 +5,11 @@ const navConfig = [
   },
   {
     title: "colaboradores",
-    path: "/colaboradores",
+    path: "/private/colaboradores",
   },
   {
     title: "projetos",
-    path: "/projetos",
+    path: "/private/projetos",
   },
   {
     title: "login",

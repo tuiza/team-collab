@@ -7,15 +7,25 @@ import Table from "@/app/components/Tabela";
 import { Stack, Typography, Button } from "@mui/material";
 import { useAppContext } from "@/contexts/appContext";
 import { tableHead } from "./tableHead";
+import { Row } from "@/types/Row";
 
 export default function UserPage() {
   const { colaboradores } = useAppContext();
   const [openNew, setOpenNew] = useState(false);
+  const [rowData, setRowData] = useState<Row>([]);
+
+
+  const handleEdit = (row?: Row) => {
+    if (row) {
+      setRowData(row)
+    }
+    setOpenNew(true)
+  }
 
   return (
     <Container>
       {openNew ?
-        <NovoColaborador setNovo={setOpenNew} /> :
+        <NovoColaborador setNovo={setOpenNew} rowData={rowData} /> :
         (
           <>
             <Stack
@@ -27,7 +37,7 @@ export default function UserPage() {
               <Typography variant="h4">Colaboradores</Typography>
 
               <Button variant="contained" color="inherit"
-                onClick={() => setOpenNew(true)}>
+                onClick={handleEdit}>
                 Novo Colaborador
               </Button>
 
@@ -36,6 +46,7 @@ export default function UserPage() {
               data={colaboradores}
               labels={tableHead}
               setOpenEdit={setOpenNew}
+              handleEdit={handleEdit}
             />
           </>
         )

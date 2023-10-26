@@ -29,15 +29,13 @@ export default function Nav({ openNav, onCloseNav }: NavProps) {
 
     const upLg = useResponsive('up', 'lg');
 
-    const openMenu = useCallback(() => {
+    useEffect(() => {
         if (openNav) {
             onCloseNav();
         }
-    }, [openNav, onCloseNav]);
-
-    useEffect(() => {
-        openMenu();
-    }, [pathname, openMenu]);
+        
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ pathname]);
 
     const renderAccount = (
         <Box

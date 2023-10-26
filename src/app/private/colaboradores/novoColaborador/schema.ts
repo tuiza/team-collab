@@ -1,7 +1,9 @@
 import * as z from "zod";
 
-const schemaLogin = z.object({
-    nome: z.string()
+const schemaLogin = z
+  .object({
+    nome: z
+      .string()
       .min(1, "Nome é obrigatório")
       .transform((nome) => {
         return nome
@@ -12,14 +14,14 @@ const schemaLogin = z.object({
           })
           .join(" ");
       }),
-    areas: z.array(z.string().min(1, "Selecione uma opção")),
-    idade: z.number().min(15, "Idade inválida"),
-    regimeContratacao: z.string().min(1, "Selecione uma opção"),
+    areas: z.array(z.string()).min(1, "Por favor, Selecione uma opção"),
+    idade: z.number().min(15, "Por favor, Idade inválida"),
+    regimeContratacao: z.string().min(1, "Por favor, Selecione uma opção"),
     email: z.string().email("Email inválido"),
   })
   .refine((data) => data.regimeContratacao.length, {
     path: ["regimeContratacao"],
-    message: "Selecione uma opção",
+    message: "Por favor, Selecione uma opção",
   });
 
 export default schemaLogin;
