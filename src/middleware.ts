@@ -1,7 +1,7 @@
 import { withAuth, NextRequestWithAuth, NextAuthMiddlewareOptions } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 const middleware = (req: NextRequestWithAuth) => {
-   const isPrivateRoutes = req.nextUrl.pathname.startsWith("/private");
+  const isPrivateRoutes = req.nextUrl.pathname.startsWith("/private");
   const isAdminUser = req.nextauth.token?.role === "admin";
 
    if (isPrivateRoutes && !isAdminUser) {
@@ -14,5 +14,5 @@ const callbackOptions: NextAuthMiddlewareOptions= {};
 export default withAuth(middleware, callbackOptions);
 
 export const config = {
-  matcher: "/private/:path*",
+  matcher: "/private",
 };

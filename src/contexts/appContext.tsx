@@ -49,11 +49,11 @@ const AppProvider = ({ children }: ContextProviderProps) => {
   }
 
   const editarProjeto = (id: string, data: Projeto) => {
-    const colaboradoresAtuais = colaboradores
+    const colaboradoresAtuais = projetos
     const index = colaboradoresAtuais.findIndex(colaborador => colaborador.id === id)
     const colaboradorModificado = { ...colaboradoresAtuais[index], ...data }
     colaboradoresAtuais[index] = colaboradorModificado
-    setColaboradores(colaboradoresAtuais)
+    setProjetos(colaboradoresAtuais)
   }
 
   const removerColaborador = (id: string) => {
