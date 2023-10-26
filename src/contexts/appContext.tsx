@@ -33,10 +33,6 @@ const AppProvider = ({ children }: ContextProviderProps) => {
   const [colaboradores, setColaboradores] = useState<Colaborador[]>(mockColaboradores);
   const [projetos, setProjetos] = useState<Projeto[]>(mockProjetos);
 
-  const getColaborador = (id: string) => {
-    return colaboradores.find((colaborador) => colaborador.id === id);
-  }
-
   const adicionarColaborador = (colaborador: Colaborador) => {
   setColaboradores((prevColaboradores) => [
       ...prevColaboradores,
