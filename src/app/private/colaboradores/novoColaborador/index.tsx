@@ -6,6 +6,7 @@ import {
     TextField,
     styled,
     Box,
+    Autocomplete
 } from '@mui/material';
 
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -48,7 +49,7 @@ const NovoColaborador = ({ setNovo, rowData }: NovoColaboradorProps) => {
                         {...register('nome', { required: true })}
                         name="nome"
                         label="Nome"
-                        
+
                         error={Boolean(errors?.nome)}
                         helperText={errors?.nome?.message}
                         fullWidth
@@ -59,7 +60,7 @@ const NovoColaborador = ({ setNovo, rowData }: NovoColaboradorProps) => {
                         {...register('email', { required: true })}
                         name="email"
                         label="Email"
-                        
+
                         error={Boolean(errors?.email)}
                         helperText={errors?.email?.message}
                         fullWidth
@@ -71,7 +72,7 @@ const NovoColaborador = ({ setNovo, rowData }: NovoColaboradorProps) => {
                         name="idade"
                         type="number"
                         label="Idade"
-                        
+
                         error={Boolean(errors?.idade)}
                         helperText={errors?.idade?.message}
                     />
@@ -87,6 +88,7 @@ const NovoColaborador = ({ setNovo, rowData }: NovoColaboradorProps) => {
                         name="regimeContratacao"
                         select
                         label="Regime de Contratação"
+                        defaultValue={rowData?.regimeContratacao}
                         error={Boolean(errors?.regimeContratacao)}
                         helperText={errors?.regimeContratacao?.message}
                         fullWidth
@@ -100,7 +102,20 @@ const NovoColaborador = ({ setNovo, rowData }: NovoColaboradorProps) => {
 
                     </TextField>
                 </MyGrid>
-                <MyGrid item xs={6}>
+                {/* <MyGrid item xs={6}>
+                    <Autocomplete
+                        {...register('areas')}
+                        componentName='areas'
+                        disablePortal
+                        id="combo-box-demo"
+                        options={options}
+                        onError={(error) => console.log(errors?.regimeContratacao?.message)}
+                        multiple={true}
+                        sx={{ width: 300 }}
+                        renderInput={(params) => <TextField {...params} name='areas' label="Áreas de atuação" />}
+                    />
+                </MyGrid> */}
+                {/* <MyGrid item xs={6}>
                     <label>
                         Áreas de atuação
                         <select
@@ -108,7 +123,7 @@ const NovoColaborador = ({ setNovo, rowData }: NovoColaboradorProps) => {
                                 required: true,
                             })}
                             name="areas"
-                            
+
                             multiple={true}
                         >
                             {areas.map((option) => (
@@ -118,7 +133,7 @@ const NovoColaborador = ({ setNovo, rowData }: NovoColaboradorProps) => {
                             ))}
                         </select>
                     </label>
-                </MyGrid>
+                </MyGrid> */}
                 <Grid container sx={{ my: 8, mx: 2 }}>
                     <Grid item xs={6}>
                         <LoadingButton
@@ -137,7 +152,7 @@ const NovoColaborador = ({ setNovo, rowData }: NovoColaboradorProps) => {
                             type='submit'
                             variant="contained"
                             color="inherit"
-                            
+
                         >
                             {rowData ? 'Salvar Edição' : 'Criar Colaborador'}
                         </LoadingButton>
