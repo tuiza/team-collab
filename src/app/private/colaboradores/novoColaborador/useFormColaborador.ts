@@ -13,7 +13,8 @@ export default function useFormColaborador(defaultValues?: Row) {
     handleSubmit,
     register,
     getValues,
-    formState: { errors },
+    setValue,
+    formState: { errors, isLoading },
   } = useForm<FormLoginType>({
     criteriaMode: "all",
     mode: "all",
@@ -44,5 +45,7 @@ export default function useFormColaborador(defaultValues?: Row) {
     register,
     errors,
     getValues,
+    setValue,
+    isLoading
   };
 }

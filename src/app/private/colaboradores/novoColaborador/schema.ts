@@ -14,7 +14,7 @@ const schemaLogin = z
           })
           .join(" ");
       }),
-    areas: z.array(z.string()).min(1, "Por favor, Selecione uma opção"),
+    areas: z.string(),
     idade: z.number().min(15, "Por favor, Idade inválida"),
     regimeContratacao: z.string().min(1, "Por favor, Selecione uma opção"),
     email: z.string().email("Email inválido"),

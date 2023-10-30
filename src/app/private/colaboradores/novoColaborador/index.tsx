@@ -6,10 +6,13 @@ import {
     TextField,
     styled,
     Box,
-    Autocomplete
+    Autocomplete,
+    Container
 } from '@mui/material';
 
 import LoadingButton from '@mui/lab/LoadingButton';
+
+import { useState } from 'react';
 
 import useFormColaborador from './useFormColaborador';
 import { regimeContratacao } from "@/public/mocks/regimeDeContratacao";
@@ -24,8 +27,11 @@ type NovoColaboradorProps = {
 }
 
 const NovoColaborador = ({ setNovo, rowData }: NovoColaboradorProps) => {
-    const { handleSubmit, handleFormSubimit, errors, register, getValues } = useFormColaborador(rowData);
+    const { handleSubmit, handleFormSubimit, errors, register, getValues, setValue, isLoading } = useFormColaborador(rowData);
+    const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
     const isMobile = useResponsive('down', 'sm')
+
+    const options = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'];
 
     const MyGrid = styled(Grid)(() => ({
         width: isMobile ? '100%' : '50%',
@@ -35,6 +41,8 @@ const NovoColaborador = ({ setNovo, rowData }: NovoColaboradorProps) => {
         handleFormSubimit(data, rowData?.id)
         setNovo(false)
     }
+
+    console.log(getValues('areas'))
 
     const renderForm = (
         <form onSubmit={handleSubmit(handleConfirm)} >
@@ -102,39 +110,26 @@ const NovoColaborador = ({ setNovo, rowData }: NovoColaboradorProps) => {
 
                     </TextField>
                 </MyGrid>
-                {/* <MyGrid item xs={6}>
+                <MyGrid item xs={6}>
                     <Autocomplete
-                        {...register('areas')}
-                        componentName='areas'
-                        disablePortal
-                        id="combo-box-demo"
-                        options={options}
-                        onError={(error) => console.log(errors?.regimeContratacao?.message)}
-                        multiple={true}
-                        sx={{ width: 300 }}
-                        renderInput={(params) => <TextField {...params} name='areas' label="Áreas de atuação" />}
+                        multiple
+                        id="areas"
+                        options={areas}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label="Areas" variant="outlined" error={!!errors.areas} helperText={errors.areas?.message}
+                            />
+                        )}
                     />
-                </MyGrid> */}
-                {/* <MyGrid item xs={6}>
-                    <label>
-                        Áreas de atuação
-                        <select
-                            {...register('areas', {
-                                required: true,
-                            })}
-                            name="areas"
-
-                            multiple={true}
-                        >
-                            {areas.map((option) => (
-                                <option key={option} value={option}>
-                                    {option}
-                                </option>
-                            ))}
-                        </select>
-                    </label>
-                </MyGrid> */}
-                <Grid container sx={{ my: 8, mx: 2 }}>
+                    <input type="hidden" {...register('areas')} />
+                </MyGrid>
+                <Container sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    gap: 2,
+                    mt: 4
+                }}>
                     <Grid item xs={6}>
                         <LoadingButton
                             loading={false}
@@ -152,12 +147,13 @@ const NovoColaborador = ({ setNovo, rowData }: NovoColaboradorProps) => {
                             type='submit'
                             variant="contained"
                             color="inherit"
+                            loading={isLoading}
 
                         >
                             {rowData ? 'Salvar Edição' : 'Criar Colaborador'}
                         </LoadingButton>
                     </Grid>
-                </Grid>
+                </Container>
             </Grid>
         </form>
     );

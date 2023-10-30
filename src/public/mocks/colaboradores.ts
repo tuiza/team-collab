@@ -20,7 +20,7 @@ export const colaboradores: Colaborador[] = [...Array(24)].map((_, index) => ({
     ],
     2
   ),
-  idade: 18,
+  idade: faker.number.int({ min: 18, max: 65 }),
   regimeContratacao: sample([
     "CLT",
     "PJ",
