@@ -21,7 +21,6 @@
 
 <p align="center">
   <a href="#rocket-tecnologias">Tecnologias</a> &#xa0; | &#xa0;
-  <a href="#white_check_mark-pré-requisitos">Pré requisitos</a> &#xa0; | &#xa0;
   <a href="#checkered_flag-começando">Começando</a> &#xa0; | &#xa0;
   <a href="https://github.com/luizamarlene" target="_blank">Autora</a>
 </p>
@@ -34,19 +33,15 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 
 - [TypeScript](https://www.typescriptlang.org/)
-- [Styled Components](https://styled-components.com/)
-- [Next.js Documentation](https://nextjs.org/docs) - 
-- [Learn Next.js](https://nextjs.org/learn) 
-
-## :white_check_mark: Pré requisitos ##
-
-Antes de começar :checkered_flag:, você precisa ter o Expo instalado em sua máquina, pra isso siga esse  tutorial: [Instalação Expo](https://docs.expo.dev/get-started/installation/)
+- [Material UI](https://mui.com/)
+- [Next.js](https://nextjs.org/docs)
+- [Commitizen](http://commitizen.github.io/cz-cli/)
 
 ## :checkered_flag: Começando ##
 
 ```bash
 # Clone este repositório
-$ git clone https://github.com/tuiza/livenStore
+$ git clone https://github.com/tuiza/team-collab
 
 # Entre na pasta
 $ cd team-collab
@@ -54,7 +49,14 @@ $ cd team-collab
 # Instale as dependências
 $ yarn
 
-# O site vai inicializar em <http://localhost:3000>
+# Rode o projeto localmente, o site vai inicializar em <http://localhost:3000>
+$ npm run dev
+# or
+$ yarn dev
+# or
+$ pnpm dev
+# or
+$ bun dev
 ```
 
 ## :memo: Licença ##
@@ -63,7 +65,7 @@ Este projeto está sob licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para m
 
 
 Feito com :heart: por: 
-<a href="https://github.com/tuiza" target="_blank">Luiza Marlene</a> |
+<a href="https://github.com/tuiza" target="_blank">Luiza Marlene</a>
 
 
 
