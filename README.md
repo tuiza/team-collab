@@ -32,10 +32,11 @@
 As seguintes ferramentas foram usadas na construção do projeto:
 
 
+- [Next.js](https://nextjs.org/docs)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Material UI](https://mui.com/)
-- [Next.js](https://nextjs.org/docs)
 - [Commitizen](http://commitizen.github.io/cz-cli/)
+- [NextAuth.js](https://next-auth.js.org/)
 
 ## :checkered_flag: Começando ##
 
